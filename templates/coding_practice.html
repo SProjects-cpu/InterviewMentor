@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Interview Mentor - Coding Practice</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v={{ range(1, 10000) | random }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='light-theme.css') }}?v={{ range(1, 10000) | random }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='gradient-theme.css') }}?v={{ range(1, 10000) | random }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='sidebar.css') }}?v={{ range(1, 10000) | random }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='coding-test.css') }}?v={{ range(1, 10000) | random }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='text-color-fix.css') }}?v={{ range(1, 10000) | random }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='test-description-fix.css') }}?v={{ range(1, 10000) | random }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='global-text-fix.css') }}?v={{ range(1, 10000) | random }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='coding-challenge-fix.css') }}?v={{ range(1, 10000) | random }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/firacode@6.2.0/distr/fira_code.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const links = document.getElementsByTagName('link');
+            for (let i = 0; i < links.length; i++) {
+                if (links[i].rel === 'stylesheet' && !links[i].href.includes('cdn')) {
+                    links[i].href = links[i].href + '?v=' + new Date().getTime();
+                }
+            }
+        });
+    </script>
+</head>
+<body class="bg-light">
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h4>Menu</h4>
+            <button class="close-btn" onclick="toggleSidebar()">×</button>
+        </div>
+        <ul class="nav flex-column">
+            <li class="nav-item"><a href="/" class="nav-link"><i class="fas fa-home"></i> Home</a></li>
+            <li class="nav-item"><a href="/resume-builder" class="nav-link"><i class="fas fa-file-alt"></i> Resume Builder</a></li>
+            <li class="nav-item"><a href="/career-guidance" class="nav-link"><i class="fas fa-graduation-cap"></i> Career Guidance</a></li>
+            <li class="nav-item"><a href="/aptitude" class="nav-link"><i class="fas fa-brain"></i> Aptitude Test</a></li>
+            <li class="nav-item"><a href="/coding-test" class="nav-link active"><i class="fas fa-code"></i> AI Coding Test</a></li>
+            <li class="nav-item"><a href="/profile" class="nav-link"><i class="fas fa-user"></i> Profile</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-cog"></i> Settings</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-info-circle"></i> About Us</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-envelope"></i> Contact Details</a></li>
+            <!-- Only show logout option when user is authenticated -->
+            {% if current_user.is_authenticated %}
+            <li class="nav-item"><a href="/logout" class="nav-link text-danger"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            {% endif %}
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <nav class="navbar">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" id="sidebarToggler">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <h3 class="navbar-brand mx-auto">Coding Practice</h3>
+            </div>
+        </nav>
+        
+        <div class="container mt-4">
+            <div class="mb-4">
+                <a href="/coding-test" class="btn editor-btn"><i class="fas fa-arrow-left"></i> Back to AI Coding Test</a>
+            </div>
+            
+            <div class="coding-test-container animate__animated animate__fadeIn">
+                <div class="coding-test-header">
+                    <h3 class="animate__animated animate__fadeInDown animate__delay-1s">Practice Mode</h3>
+                    <p class="animate__animated animate__fadeInUp animate__delay-1s">Master your coding skills with real-time AI feedback and interactive challenges</p>
+                    <div class="header-badges animate__animated animate__fadeIn animate__delay-2s">
+                        <span class="header-badge"><i class="fas fa-code"></i> Python</span>
+                        <span class="header-badge"><i class="fas fa-robot"></i> AI Powered</span>
+                        <span class="header-badge"><i class="fas fa-bolt"></i> Real-time Feedback</span>
+                    </div>
+                </div>
+                
+                <div class="coding-test-content">
+                    <div class="row mb-4">
+                        <div class="col-md-6 mb-4 animate__animated animate__fadeInLeft animate__delay-1s">
+                            <div class="challenge-card" data-type="string-reversal">
+                                <div class="challenge-header">
+                                    <span class="badge bg-success position-absolute top-0 end-0 m-2">Easy</span>
+                                    <h4>String Reversal</h4>
+                                </div>
+                                <div class="challenge-body">
+                                    <p>Write a function that takes a string as input and returns the string reversed.</p>
+                                    <div class="challenge-tags">
+                                        <span class="tag">Strings</span>
+                                        <span class="tag">Algorithms</span>
+                                    </div>
+                                </div>
+                                <div class="challenge-footer">
+                                    <div class="challenge-meta">
+                                        <div class="difficulty">
+                                            <i class="fas fa-signal"></i> Easy
+                                        </div>
+                                        <div class="time">
+                                            <i class="far fa-clock"></i> 5-10 min
+                                        </div>
+                                    </div>
+                                    <button class="btn practice-btn" data-challenge="string_reversal">Practice <i class="fas fa-arrow-right"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6 mb-4 animate__animated animate__fadeInRight animate__delay-1s">
+                            <div class="challenge-card" data-type="palindrome">
+                                <div class="challenge-header">
+                                    <span class="badge bg-warning position-absolute top-0 end-0 m-2">Medium</span>
+                                    <h4>Palindrome Checker</h4>
+                                </div>
+                                <div class="challenge-body">
+                                    <p>Create a function to check if a given string is a palindrome (reads the same forward and backward).</p>
+                                    <div class="challenge-tags">
+                                        <span class="tag">Strings</span>
+                                        <span class="tag">Logic</span>
+                                    </div>
+                                </div>
+                                <div class="challenge-footer">
+                                    <div class="challenge-meta">
+                                        <div class="difficulty">
+                                            <i class="fas fa-signal"></i> Medium
+                                        </div>
+                                        <div class="time">
+                                            <i class="far fa-clock"></i> 10-15 min
+                                        </div>
+                                    </div>
+                                    <button class="btn practice-btn" data-challenge="palindrome">Practice <i class="fas fa-arrow-right"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row mb-4 animate__animated animate__fadeIn animate__delay-2s">
+                        <div class="col-12">
+                            <div class="info-banner">
+                                <div class="info-icon">
+                                    <i class="fas fa-lightbulb"></i>
+                                </div>
+                                <div class="info-content">
+                                    <h5>Why Practice Matters</h5>
+                                    <p>Regular coding practice helps you build muscle memory, improve problem-solving skills, and prepare for technical interviews. Our AI-powered feedback system helps you learn faster by providing personalized suggestions.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="practice-area" class="d-none">
+                        <div class="practice-header mb-4 animate__animated animate__fadeIn">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h4 id="challenge-title" class="mb-0">Challenge Title</h4>
+                                <div class="practice-controls">
+                                    <button id="back-to-challenges" class="btn editor-btn"><i class="fas fa-arrow-left"></i> Back to Challenges</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="challenge-description" class="question-panel mb-4 animate__animated animate__fadeInUp">
+                            <h4>Problem Description</h4>
+                            <div id="challenge-text" class="question-description">
+                                <!-- Challenge description will be inserted here -->
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-lg-7">
+                                <div class="code-editor-container animate__animated animate__fadeInLeft">
+                                    <div class="editor-header">
+                                        <div class="d-flex align-items-center">
+                                            <div class="editor-tabs">
+                                                <span class="editor-tab active">Python</span>
+                                            </div>
+                                        </div>
+                                        <div class="editor-actions">
+                                            <button id="clear-code" class="editor-btn"><i class="fas fa-eraser"></i> Clear</button>
+                                            <button id="run-code" class="editor-btn run"><i class="fas fa-play"></i> Run Code</button>
+                                        </div>
+                                    </div>
+                                    <textarea id="code-editor" class="code-editor" spellcheck="false" style="width: 100%; height: 350px; font-family: 'Fira Code', monospace; padding: 16px; border: none; outline: none; resize: vertical;"></textarea>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-5">
+                                <!-- Terminal Output Section -->
+                                <div class="terminal-container animate__animated animate__fadeInRight">
+                                    <div class="terminal-header">
+                                        <span>Output</span>
+                                        <div class="terminal-controls">
+                                            <button id="clear-terminal" class="btn-sm btn-dark" title="Clear Terminal"><i class="fas fa-times"></i></button>
+                                        </div>
+                                    </div>
+                                    <div id="terminal-output" class="terminal-output">
+                                        <div class="section-header">Ready to run your code...</div>
+                                    </div>
+                                </div>
+                                
+                                <!-- AI Review Section -->
+                                <div class="ai-review-container mt-4 animate__animated animate__fadeInRight animate__delay-1s">
+                                    <div class="ai-review-header">
+                                        <span class="ai-icon"><i class="fas fa-robot"></i></span>
+                                        <span>Gemini AI Code Review</span>
+                                    </div>
+                                    <div id="ai-review-content" class="ai-review-content">
+                                        <div class="section-header">AI review will appear here...</div>
+                                        <div class="ai-placeholder">
+                                            <div class="ai-placeholder-icon">
+                                                <i class="fas fa-robot"></i>
+                                            </div>
+                                            <p>Run your code to get personalized AI feedback on your solution.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="practice-footer mt-4 animate__animated animate__fadeIn animate__delay-2s">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="practice-tip">
+                                        <h5><i class="fas fa-lightbulb"></i> Pro Tip</h5>
+                                        <p>Try to solve the problem on your own before checking the solution. This helps build your problem-solving skills.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="practice-resources">
+                                        <h5><i class="fas fa-book"></i> Resources</h5>
+                                        <ul>
+                                            <li><a href="https://www.w3schools.com/python/" target="_blank">Python Documentation</a></li>
+                                            <li><a href="https://leetcode.com/problemset/" target="_blank">More Practice Problems</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='sidebar.js') }}"></script>
+    <script src="{{ url_for('static', filename='coding-test.js') }}"></script>
+    
+    <script>
+    // Function to decode HTML entities
+    function decodeHtmlEntities(text) {
+        const textArea = document.createElement('textarea');
+        textArea.innerHTML = text;
+        return textArea.value;
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Challenge descriptions
+        const challengeDescriptions = {
+            string_reversal: {
+                title: 'String Reversal Challenge',
+                description: `<p>Write a function that takes a string as input and returns the string reversed. For example, if the input is "Hello", the output should be "olleH".</p>
+                <p><strong>Requirements:</strong></p>
+                <ul>
+                    <li>Your solution should handle empty strings</li>
+                    <li>Your solution should handle strings with spaces</li>
+                    <li>Your solution should be efficient</li>
+                </ul>
+                
+                <div class="mt-4">
+                    <h5>Examples:</h5>
+                    <div class="example-container">
+                        <div class="example">
+                            <p><strong>Input:</strong> <code>"Hello"</code></p>
+                            <p><strong>Output:</strong> <code>"olleH"</code></p>
+                        </div>
+                        <div class="example">
+                            <p><strong>Input:</strong> <code>"Interview Mentor"</code></p>
+                            <p><strong>Output:</strong> <code>"rotneM weivretn"</code></p>
+                        </div>
+                        <div class="example">
+                            <p><strong>Input:</strong> <code>""</code></p>
+                            <p><strong>Output:</strong> <code>""</code></p>
+                            <p><strong>Explanation:</strong> Empty string returns empty string.</p>
+                        </div>
+                    </div>
+                </div>`,
+                template: `def solution(input_string):
+    # Write your code here to reverse the string
+    return input_string[::-1]
+
+# Test cases
+print(solution("Hello"))
+print(solution("Interview Mentor"))
+print(solution(""))`
+            },
+            palindrome: {
+                title: 'Palindrome Checker Challenge',
+                description: `<p>Create a function to check if a given string is a palindrome (reads the same forward and backward).</p>
+                <p>For this problem, a string is a palindrome if, after converting all uppercase letters into lowercase letters and removing all non-alphanumeric characters, it reads the same forward and backward.</p>
+                
+                <div class="mt-4">
+                    <h5>Examples:</h5>
+                    <div class="example-container">
+                        <div class="example">
+                            <p><strong>Input:</strong> <code>"A man, a plan, a canal: Panama"</code></p>
+                            <p><strong>Output:</strong> <code>True</code></p>
+                            <p><strong>Explanation:</strong> After removing non-alphanumeric characters and converting to lowercase, the string becomes "amanaplanacanalpanama", which is a palindrome.</p>
+                        </div>
+                        <div class="example">
+                            <p><strong>Input:</strong> <code>"race a car"</code></p>
+                            <p><strong>Output:</strong> <code>False</code></p>
+                            <p><strong>Explanation:</strong> After removing non-alphanumeric characters and converting to lowercase, the string becomes "raceacar", which is not a palindrome.</p>
+                        </div>
+                        <div class="example">
+                            <p><strong>Input:</strong> <code>" "</code></p>
+                            <p><strong>Output:</strong> <code>True</code></p>
+                            <p><strong>Explanation:</strong> After removing non-alphanumeric characters, the string becomes "", which is a palindrome.</p>
+                        </div>
+                    </div>
+                </div>`,
+                template: `def solution(input_string):
+    # Write your code here to check if the string is a palindrome
+    # Remember to handle non-alphanumeric characters and case sensitivity
+    
+    # Clean the string: remove non-alphanumeric chars and convert to lowercase
+    cleaned = ''.join(char.lower() for char in input_string if char.isalnum())
+    
+    # Check if the cleaned string is equal to its reverse
+    return cleaned == cleaned[::-1]
+
+# Test cases
+print(solution("A man, a plan, a canal: Panama"))  # Should return True
+print(solution("race a car"))  # Should return False
+print(solution(" "))  # Should return True`
+            }
+        };
+        
+        // Practice buttons
+        const practiceButtons = document.querySelectorAll('.practice-btn');
+        const practiceArea = document.getElementById('practice-area');
+        const challengeText = document.getElementById('challenge-text');
+        const codeEditor = document.getElementById('code-editor');
+        const backButton = document.getElementById('back-to-challenges');
+        const clearTerminalBtn = document.getElementById('clear-terminal');
+        
+        // Make sure the editor is interactive
+        if (codeEditor) {
+            codeEditor.addEventListener('click', function() {
+                this.focus();
+            });
+            
+            // Make sure the editor is editable
+            codeEditor.readOnly = false;
+            
+            // Add tab key support
+            codeEditor.addEventListener('keydown', function(e) {
+                if (e.key === 'Tab') {
+                    e.preventDefault();
+                    
+                    // Insert tab at cursor position
+                    const start = this.selectionStart;
+                    const end = this.selectionEnd;
+                    
+                    // Set textarea value to: text before caret + tab + text after caret
+                    this.value = this.value.substring(0, start) + '    ' + this.value.substring(end);
+                    
+                    // Move caret to position after inserted tab
+                    this.selectionStart = this.selectionEnd = start + 4;
+                }
+            });
+        }
+        
+        // Handle practice button clicks
+        practiceButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const challengeType = this.getAttribute('data-challenge');
+                const challenge = challengeDescriptions[challengeType];
+                
+                // Update challenge description
+                document.getElementById('challenge-title').textContent = challenge.title;
+                challengeText.innerHTML = challenge.description;
+                
+                // Set code template
+                codeEditor.value = challenge.template;
+                
+                // Show practice area and hide challenges
+                document.querySelectorAll('.challenge-card').forEach(card => {
+                    card.closest('.col-md-6').style.display = 'none';
+                });
+                document.querySelector('.info-banner').closest('.row').style.display = 'none';
+                practiceArea.classList.remove('d-none');
+                
+                // Clear terminal and AI review
+                document.getElementById('terminal-output').innerHTML = '<div class="section-header">Ready to run your code...</div>';
+                document.getElementById('ai-review-content').innerHTML = `
+                    <div class="section-header">AI review will appear here...</div>
+                    <div class="ai-placeholder">
+                        <div class="ai-placeholder-icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <p>Run your code to get personalized AI feedback on your solution.</p>
+                    </div>
+                `;
+                
+                // Make sure the editor is focused and ready for input
+                setTimeout(() => {
+                    codeEditor.focus();
+                }, 100);
+            });
+        });
+        
+        // Handle back button click
+        backButton.addEventListener('click', function() {
+            // Hide practice area and show challenges
+            practiceArea.classList.add('d-none');
+            document.querySelectorAll('.challenge-card').forEach(card => {
+                card.closest('.col-md-6').style.display = 'block';
+            });
+            document.querySelector('.info-banner').closest('.row').style.display = 'flex';
+        });
+        
+        // Clear terminal button
+        if (clearTerminalBtn) {
+            clearTerminalBtn.addEventListener('click', function() {
+                document.getElementById('terminal-output').innerHTML = '<div class="section-header">Terminal cleared</div>';
+            });
+        }
+        
+        // Run code button
+        const runButton = document.getElementById('run-code');
+        if (runButton) {
+            runButton.addEventListener('click', function() {
+                const code = codeEditor.value;
+                const terminalOutput = document.getElementById('terminal-output');
+                const aiReviewContent = document.getElementById('ai-review-content');
+                
+                // Determine which challenge is being practiced
+                let challengeId = 'string_reversal'; // Default
+                if (document.getElementById('challenge-title').textContent.includes('Palindrome')) {
+                    challengeId = 'palindrome';
+                }
+                
+                // Disable run button and show loading
+                runButton.disabled = true;
+                runButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Running...';
+                
+                // Show loading in terminal
+                terminalOutput.innerHTML = '<div class="section-header">Running your code...</div>';
+                
+                // Clear AI review
+                aiReviewContent.innerHTML = '<div class="ai-loading">Generating AI review...</div>';
+                
+                // Execute the code
+                fetch('/api/execute-code', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        code: code,
+                        language: 'python',
+                        challenge_id: challengeId
+                    }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Re-enable run button
+                    runButton.disabled = false;
+                    runButton.innerHTML = '<i class="fas fa-play"></i> Run Code';
+                    
+                    // Display execution result
+                    if (data.execution_result) {
+                        terminalOutput.innerHTML = formatTerminalOutput(data.execution_result.output);
+                    } else {
+                        terminalOutput.innerHTML = '<div class="error">Error: No execution result returned</div>';
+                    }
+                    
+                    // Display AI review if available
+                    if (data.ai_review && data.ai_review.status === 'success') {
+                        // Decode HTML entities first
+                        const decodedReview = decodeHtmlEntities(data.ai_review.review);
+                        
+                        // Create a temporary div to parse the HTML content
+                        const tempDiv = document.createElement('div');
+                        tempDiv.innerHTML = decodedReview;
+                        
+                        // Remove any script tags for security
+                        const scripts = tempDiv.getElementsByTagName('script');
+                        while(scripts[0]) {
+                            scripts[0].parentNode.removeChild(scripts[0]);
+                        }
+                        
+                        // Fix code blocks
+                        const codeBlocks = tempDiv.querySelectorAll('pre code');
+                        if (codeBlocks.length > 0) {
+                            codeBlocks.forEach(block => {
+                                // Ensure proper formatting for code blocks
+                                block.style.display = 'block';
+                                block.style.whiteSpace = 'pre-wrap';
+                                block.style.fontFamily = "'Fira Code', monospace";
+                            });
+                        }
+                        
+                        // Fix any triple backtick code blocks that might not be properly formatted
+                        const content = tempDiv.innerHTML;
+                        let fixedContent = content.replace(/```(\w*)([\s\S]*?)```/g, function(match, language, code) {
+                            return `<pre><code class="language-${language || 'plaintext'}">${code}</code></pre>`;
+                        });
+                        
+                        // Fix any remaining HTML tags that might be showing as text
+                        fixedContent = fixedContent.replace(/&lt;(\/?[a-z][a-z0-9]*)((?:\s+[a-z0-9-]+(?:=(?:"[^"]*"|'[^']*'|[^'">\s]+))?)*)\s*&gt;/gi, function(match) {
+                            return decodeHtmlEntities(match);
+                        });
+                        
+                        // Enhance the AI review with sections
+                        let enhancedReview = `
+                            <div class="ai-feedback-section mb-4">
+                                <h5><i class="fas fa-check-circle"></i> Code Analysis</h5>
+                                ${fixedContent}
+                            </div>
+                        `;
+                        
+                        // Set the sanitized content
+                        aiReviewContent.innerHTML = enhancedReview;
+                        
+                        // Add animation to the AI review
+                        aiReviewContent.classList.add('animate__animated', 'animate__fadeIn');
+                        setTimeout(() => {
+                            aiReviewContent.classList.remove('animate__animated', 'animate__fadeIn');
+                        }, 1000);
+                    } else if (data.ai_review && data.ai_review.status === 'error') {
+                        // Check if the error is related to missing API key
+                        if (data.ai_review.message && data.ai_review.message.includes('API key')) {
+                            aiReviewContent.innerHTML = `
+                                <div class="error">
+                                    <h5><i class="fas fa-exclamation-triangle"></i> AI Review Not Available</h5>
+                                    <p>The AI code review feature requires a valid Gemini API key.</p>
+                                    <p>Please check the README_GEMINI.md file for instructions on how to set up your API key.</p>
+                                </div>`;
+                        } else {
+                            aiReviewContent.innerHTML = `<div class="error">AI Review Error: ${data.ai_review.message || 'Unknown error'}</div>`;
+                        }
+                    } else {
+                        aiReviewContent.innerHTML = '<div class="section-header">No AI review available</div>';
+                    }
+                })
+                .catch(error => {
+                    // Re-enable run button
+                    runButton.disabled = false;
+                    runButton.innerHTML = '<i class="fas fa-play"></i> Run Code';
+                    
+                    // Display the error
+                    terminalOutput.innerHTML = `<div class="error">Error: ${error.message}</div>`;
+                    aiReviewContent.innerHTML = '<div class="section-header">AI review unavailable due to an error</div>';
+                });
+            });
+        }
+        
+        // Clear code button
+        const clearButton = document.getElementById('clear-code');
+        if (clearButton) {
+            clearButton.addEventListener('click', function() {
+                // Determine which challenge is being practiced
+                let template = challengeDescriptions.string_reversal.template; // Default
+                if (document.getElementById('challenge-title').textContent.includes('Palindrome')) {
+                    template = challengeDescriptions.palindrome.template;
+                }
+                
+                // Reset to template
+                codeEditor.value = template;
+                
+                // Clear terminal and AI review
+                document.getElementById('terminal-output').innerHTML = '<div class="section-header">Ready to run your code...</div>';
+                document.getElementById('ai-review-content').innerHTML = `
+                    <div class="section-header">AI review will appear here...</div>
+                    <div class="ai-placeholder">
+                        <div class="ai-placeholder-icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <p>Run your code to get personalized AI feedback on your solution.</p>
+                    </div>
+                `;
+            });
+        }
+        
+        // Format terminal output
+        function formatTerminalOutput(output) {
+            if (!output) return '<div class="error">No output</div>';
+            
+            // Split the output into lines
+            const lines = output.split('\n');
+            let formattedOutput = '<div class="section-header">Execution Result:</div><div class="section-content">';
+            
+            // Check if output contains error
+            if (output.includes('Error') || output.includes('error') || output.includes('Exception') || output.includes('exception')) {
+                formattedOutput = '<div class="section-header error">Execution Error:</div><div class="section-content error">';
+            }
+            
+            // Add all lines to the output
+            for (const line of lines) {
+                if (line.trim() !== '') {
+                    formattedOutput += line + '\n';
+                }
+            }
+            
+            // Close the section
+            formattedOutput += '</div>';
+            
+            // Add execution stats if available
+            if (output.includes('Execution completed')) {
+                const statsLine = lines.find(line => line.includes('Execution completed'));
+                if (statsLine) {
+                    formattedOutput += `<div class="execution-stats">${statsLine}</div>`;
+                }
+            }
+            
+            return formattedOutput;
+        }
+        
+        // Toggle sidebar
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('mainContent');
+            
+            sidebar.classList.toggle('active');
+            mainContent.classList.toggle('shifted');
+        }
+        
+        // Initialize sidebar toggle button
+        document.getElementById('sidebarToggler').addEventListener('click', toggleSidebar);
+    });
+    </script>
+</body>
+</html> 

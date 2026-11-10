@@ -1,0 +1,215 @@
+/* Code Editor Visibility and Contrast Fixes */
+
+/* Code editor container */
+.code-editor-container {
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+/* Editor header */
+.editor-header {
+    background: linear-gradient(135deg, #1a3a8f, #2a4da6);
+    color: #ffffff;
+    padding: 10px 15px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.editor-header .language-badge {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+/* Code editor - Light theme */
+.code-editor {
+    background-color: #f8f9fa;
+    color: #212529;
+    font-family: 'Fira Code', 'Consolas', monospace;
+    padding: 15px;
+    line-height: 1.5;
+    min-height: 300px;
+    font-size: 14px;
+    tab-size: 4;
+}
+
+/* Syntax highlighting - Light theme */
+.code-editor .keyword {
+    color: #0033b3;
+    font-weight: 600;
+}
+
+.code-editor .string {
+    color: #067d17;
+}
+
+.code-editor .comment {
+    color: #8c8c8c;
+    font-style: italic;
+}
+
+.code-editor .function {
+    color: #7d3c98;
+}
+
+.code-editor .number {
+    color: #1a5fb4;
+}
+
+.code-editor .operator {
+    color: #a61e4d;
+}
+
+/* Terminal output */
+.terminal-output {
+    background-color: #212529;
+    color: #f8f9fa;
+    font-family: 'Fira Code', 'Consolas', monospace;
+    padding: 15px;
+    border-top: 1px solid #343a40;
+    max-height: 200px;
+    overflow-y: auto;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.terminal-output .error {
+    color: #ff6b6b !important;
+    font-weight: 500;
+}
+
+.terminal-output .success {
+    color: #51cf66 !important;
+    font-weight: 500;
+}
+
+.terminal-output .warning {
+    color: #fcc419 !important;
+    font-weight: 500;
+}
+
+.terminal-output .info {
+    color: #4dabf7 !important;
+    font-weight: 500;
+}
+
+/* Code editor controls */
+.editor-controls {
+    background-color: #f1f3f5;
+    border-top: 1px solid #dee2e6;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.editor-controls button {
+    background-color: #1a3a8f;
+    color: #ffffff;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.editor-controls button:hover {
+    background-color: #15316f;
+}
+
+.editor-controls button:disabled {
+    background-color: #adb5bd;
+    cursor: not-allowed;
+}
+
+/* Line numbers */
+.line-numbers {
+    background-color: #e9ecef;
+    color: #6c757d;
+    padding: 15px 10px;
+    text-align: right;
+    font-family: 'Fira Code', 'Consolas', monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    border-right: 1px solid #dee2e6;
+    user-select: none;
+}
+
+/* Dark theme adjustments */
+.dark-theme .code-editor-container {
+    background-color: #212529;
+    border-color: #343a40;
+}
+
+.dark-theme .editor-header {
+    background: linear-gradient(135deg, #15316f, #1a3a8f);
+}
+
+.dark-theme .code-editor {
+    background-color: #2d3748;
+    color: #e2e8f0;
+}
+
+.dark-theme .line-numbers {
+    background-color: #1a202c;
+    color: #a0aec0;
+    border-right-color: #4a5568;
+}
+
+.dark-theme .editor-controls {
+    background-color: #1a202c;
+    border-top-color: #4a5568;
+}
+
+/* Syntax highlighting - Dark theme */
+.dark-theme .code-editor .keyword {
+    color: #93c5fd;
+    font-weight: 600;
+}
+
+.dark-theme .code-editor .string {
+    color: #6ee7b7;
+}
+
+.dark-theme .code-editor .comment {
+    color: #94a3b8;
+    font-style: italic;
+}
+
+.dark-theme .code-editor .function {
+    color: #d8b4fe;
+}
+
+.dark-theme .code-editor .number {
+    color: #93c5fd;
+}
+
+.dark-theme .code-editor .operator {
+    color: #f9a8d4;
+}
+
+/* Accessibility focus states */
+.editor-controls button:focus {
+    outline: 3px solid #4285f4;
+    outline-offset: 2px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .code-editor, .terminal-output, .line-numbers {
+        font-size: 13px;
+    }
+    
+    .editor-controls {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+} 

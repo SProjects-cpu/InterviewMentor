@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Interview Mentor - Coding Challenge</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='light-theme.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='gradient-theme.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='sidebar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='coding-test.css') }}">
+    <!-- New accessibility CSS files -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='color-accessibility-fix.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='sidebar-fix.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='code-editor-fix.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='form-button-fix.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='coding-challenge-fix.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/firacode@6.2.0/distr/fira_code.css">
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const links = document.getElementsByTagName('link');
+            for (let i = 0; i < links.length; i++) {
+                if (links[i].rel === 'stylesheet' && !links[i].href.includes('cdn')) {
+                    links[i].href = links[i].href + '?v=' + new Date().getTime();
+                }
+            }
+        });
+    </script>
+</head>
+<body class="bg-light">
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h4>Menu</h4>
+            <button class="close-btn" onclick="toggleSidebar()">×</button>
+        </div>
+        <ul class="nav flex-column">
+            <li class="nav-item"><a href="/" class="nav-link"><i class="fas fa-home"></i> Home</a></li>
+            <li class="nav-item"><a href="/resume-builder" class="nav-link"><i class="fas fa-file-alt"></i> Resume Builder</a></li>
+            <li class="nav-item"><a href="/career-guidance" class="nav-link"><i class="fas fa-graduation-cap"></i> Career Guidance</a></li>
+            <li class="nav-item"><a href="/aptitude" class="nav-link"><i class="fas fa-brain"></i> Aptitude Test</a></li>
+            <li class="nav-item"><a href="/coding-test" class="nav-link active"><i class="fas fa-code"></i> AI Coding Test</a></li>
+            <li class="nav-item"><a href="/profile" class="nav-link"><i class="fas fa-user"></i> Profile</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-cog"></i> Settings</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-info-circle"></i> About Us</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-envelope"></i> Contact Details</a></li>
+            <!-- Only show logout option when user is authenticated -->
+            {% if current_user.is_authenticated %}
+            <li class="nav-item"><a href="/logout" class="nav-link text-danger"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            {% endif %}
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <nav class="navbar">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" id="sidebarToggler">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <h3 class="navbar-brand mx-auto">Coding Challenge</h3>
+            </div>
+        </nav>
+        
+        <div class="container mt-4">
+            <div class="mb-4">
+                <a href="/coding-test/challenges" class="btn editor-btn"><i class="fas fa-arrow-left"></i> Back to Challenges</a>
+            </div>
+            
+            <!-- Hidden data elements for code templates -->
+            <div id="code-templates" style="display: none;"
+                data-python="{{ challenge.solution_template.python|default("")|tojson }}"
+                data-javascript="{{ challenge.solution_template.javascript|default("")|tojson }}"
+                data-java="{{ challenge.solution_template.java|default("")|tojson }}"
+                data-cpp="{{ challenge.solution_template.cpp|default("")|tojson }}">
+            </div>
+            
+            <div class="coding-test-container">
+                <div class="coding-test-header">
+                    <span class="badge bg-{{ challenge.difficulty_class|default('success') }} position-absolute top-0 end-0 m-3">{{ challenge.difficulty|default('Easy') }}</span>
+                    <h3>{{ challenge.title|default('String Reversal') }}</h3>
+                    <p>{{ challenge.subtitle|default('Reverse a string efficiently') }}</p>
+                </div>
+                <div class="coding-test-content">
+                    <div class="question-panel">
+                        <h4>Problem Description</h4>
+                        <div class="question-description">
+                            {{ challenge.description | safe }}
+                            
+                            <div class="mt-4">
+                                <h5>Examples:</h5>
+                                <div class="example-container">
+                                    {% for example in challenge.examples %}
+                                    <div class="example">
+                                        <p><strong>Input:</strong> <code>{{ example.input }}</code></p>
+                                        <p><strong>Output:</strong> <code>{{ example.output }}</code></p>
+                                        {% if example.explanation %}
+                                        <p><strong>Explanation:</strong> {{ example.explanation }}</p>
+                                        {% endif %}
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            
+                            <div class="mt-4">
+                                <h5>Constraints:</h5>
+                                <ul>
+                                    {% for constraint in challenge.constraints %}
+                                    <li>{{ constraint }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="code-editor-container">
+                        <div class="editor-header">
+                            <div class="editor-actions">
+                                <button id="clear-code" class="editor-btn">Clear</button>
+                                <button id="run-code" class="editor-btn run"><i class="fas fa-play"></i> Run Code</button>
+                            </div>
+                        </div>
+                        <textarea id="code-editor" class="code-editor" spellcheck="false"></textarea>
+                    </div>
+                    
+                    <!-- Terminal Output Section -->
+                    <div class="terminal-container">
+                        <div class="terminal-header">
+                            <span>Output</span>
+                        </div>
+                        <div id="terminal-output" class="terminal-output">
+                            <div class="section-header">Ready to run your code...</div>
+                        </div>
+                    </div>
+                    
+                    <!-- AI Review Section -->
+                    <div class="ai-review-container">
+                        <div class="ai-review-header">
+                            <span class="ai-icon"><i class="fas fa-robot"></i></span>
+                            <span>Gemini AI Code Review</span>
+                        </div>
+                        <div id="ai-review-content" class="ai-review-content">
+                            <div class="section-header">AI review will appear here...</div>
+                        </div>
+                    </div>
+                    
+                    <div class="navigation-buttons mt-4 d-flex justify-content-between">
+                        {% if challenge.prev_id %}
+                        <a href="/coding-test/challenge/{{ challenge.prev_id }}" class="btn editor-btn"><i class="fas fa-chevron-left"></i> Previous Challenge</a>
+                        {% else %}
+                        <div></div>
+                        {% endif %}
+                        
+                        {% if challenge.next_id %}
+                        <a href="/coding-test/challenge/{{ challenge.next_id }}" class="btn editor-btn">Next Challenge <i class="fas fa-chevron-right"></i></a>
+                        {% else %}
+                        <div></div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='sidebar.js') }}"></script>
+    
+    <script>
+    // Get code template from the challenge data
+    const codeTemplateElement = document.getElementById('code-templates');
+    let codeTemplate = '';
+    
+    if (codeTemplateElement) {
+        // Get Python template by default
+        codeTemplate = JSON.parse(codeTemplateElement.getAttribute('data-python') || '""');
+        if (!codeTemplate) {
+            // Fallback template if none is provided
+            codeTemplate = `def solution(input_string):
+    # Write your code here
+    return input_string
+    
+# Test cases
+print(solution("Hello"))`;
+        }
+    }
+
+    // Initialize the code editor with Python code by default
+    document.addEventListener('DOMContentLoaded', function() {
+        // Set default code
+        const codeEditor = document.getElementById('code-editor');
+        if (codeEditor) {
+            codeEditor.value = codeTemplate;
+            
+            // Make sure the editor is interactive
+            codeEditor.addEventListener('click', function() {
+                this.focus();
+            });
+            
+            // Make sure the editor is editable
+            codeEditor.readOnly = false;
+        }
+        
+        // Clear the terminal output initially
+        const terminalOutput = document.getElementById('terminal-output');
+        if (terminalOutput) {
+            terminalOutput.innerHTML = '<div class="section-header">Ready to run your code...</div>';
+        }
+        
+        // Clear AI review initially
+        const aiReviewContent = document.getElementById('ai-review-content');
+        if (aiReviewContent) {
+            aiReviewContent.innerHTML = '<div class="section-header">AI review will appear here...</div>';
+        }
+    });
+
+    // Function to decode HTML entities
+    function decodeHtmlEntities(text) {
+        const textArea = document.createElement('textarea');
+        textArea.innerHTML = text;
+        return textArea.value;
+    }
+
+    // Handle run button click
+    document.getElementById('run-code').addEventListener('click', function() {
+        const code = document.getElementById('code-editor').value;
+        const language = 'python'; // Fixed to Python
+        const terminalOutput = document.getElementById('terminal-output');
+        const aiReviewContent = document.getElementById('ai-review-content');
+        const runBtn = document.getElementById('run-code');
+        
+        // Disable the run button while executing
+        runBtn.disabled = true;
+        runBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Running...';
+        
+        // Show loading in terminal
+        terminalOutput.innerHTML = '<div class="section-header">Running your code...</div>';
+        
+        // Clear AI review
+        aiReviewContent.innerHTML = '<div class="ai-loading">Generating AI review...</div>';
+        
+        // Get challenge ID from URL
+        const urlParts = window.location.pathname.split('/');
+        const challengeId = urlParts[urlParts.length - 1];
+        
+        // Execute the code
+        fetch('/api/execute-code', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                code: code,
+                language: language,
+                challenge_id: challengeId
+            }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Re-enable the run button
+            runBtn.disabled = false;
+            runBtn.innerHTML = '<i class="fas fa-play"></i> Run Code';
+            
+            // Display the execution result
+            if (data.execution_result) {
+                terminalOutput.innerHTML = formatTerminalOutput(data.execution_result.output);
+            } else {
+                terminalOutput.innerHTML = '<div class="error">Error: No execution result returned</div>';
+            }
+            
+            // Display AI review if available
+            if (data.ai_review && data.ai_review.status === 'success') {
+                // Decode HTML entities first
+                const decodedReview = decodeHtmlEntities(data.ai_review.review);
+                
+                // Create a temporary div to parse the HTML content
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = decodedReview;
+                
+                // Remove any script tags for security
+                const scripts = tempDiv.getElementsByTagName('script');
+                while(scripts[0]) {
+                    scripts[0].parentNode.removeChild(scripts[0]);
+                }
+                
+                // Fix code blocks
+                const codeBlocks = tempDiv.querySelectorAll('pre code');
+                if (codeBlocks.length > 0) {
+                    codeBlocks.forEach(block => {
+                        // Ensure proper formatting for code blocks
+                        block.style.display = 'block';
+                        block.style.whiteSpace = 'pre-wrap';
+                        block.style.fontFamily = "'Fira Code', monospace";
+                    });
+                }
+                
+                // Fix any triple backtick code blocks that might not be properly formatted
+                const content = tempDiv.innerHTML;
+                let fixedContent = content.replace(/```(\w*)([\s\S]*?)```/g, function(match, language, code) {
+                    return `<pre><code class="language-${language || 'plaintext'}">${code}</code></pre>`;
+                });
+                
+                // Fix any remaining HTML tags that might be showing as text
+                fixedContent = fixedContent.replace(/&lt;(\/?[a-z][a-z0-9]*)((?:\s+[a-z0-9-]+(?:=(?:"[^"]*"|'[^']*'|[^'">\s]+))?)*)\s*&gt;/gi, function(match) {
+                    return decodeHtmlEntities(match);
+                });
+                
+                // Set the sanitized content
+                aiReviewContent.innerHTML = fixedContent;
+                
+                // Make sure the AI review container is visible
+                document.querySelector('.ai-review-container').style.display = 'block';
+            } else if (data.ai_review && data.ai_review.status === 'error') {
+                // Check if the error is related to missing API key
+                if (data.ai_review.message && data.ai_review.message.includes('API key')) {
+                    aiReviewContent.innerHTML = `
+                        <div class="error">
+                            <h5><i class="fas fa-exclamation-triangle"></i> AI Review Not Available</h5>
+                            <p>The AI code review feature requires a valid Gemini API key.</p>
+                            <p>Please check the README_GEMINI.md file for instructions on how to set up your API key.</p>
+                        </div>`;
+                } else {
+                    aiReviewContent.innerHTML = `<div class="error">AI Review Error: ${data.ai_review.message || 'Unknown error'}</div>`;
+                }
+                // Make sure the AI review container is visible
+                document.querySelector('.ai-review-container').style.display = 'block';
+            } else {
+                aiReviewContent.innerHTML = '<div class="section-header">No AI review available</div>';
+            }
+        })
+        .catch(error => {
+            // Re-enable the run button
+            runBtn.disabled = false;
+            runBtn.innerHTML = '<i class="fas fa-play"></i> Run Code';
+            
+            // Display the error
+            terminalOutput.innerHTML = `<div class="error">Error: ${error.message}</div>`;
+            aiReviewContent.innerHTML = '<div class="section-header">AI review unavailable due to an error</div>';
+        });
+    });
+
+    // Handle clear button click
+    document.getElementById('clear-code').addEventListener('click', function() {
+        // Reset to template
+        const codeEditor = document.getElementById('code-editor');
+        if (codeEditor) {
+            codeEditor.value = codeTemplate;
+        }
+        
+        clearTerminalAndAiReview();
+    });
+
+    // Format terminal output to look like an online compiler
+    function formatTerminalOutput(output) {
+        if (!output) return '<div class="error">No output</div>';
+        
+        // Split the output into lines
+        const lines = output.split('\n');
+        let formattedOutput = '<div class="section-header">Execution Result:</div><div class="section-content">';
+        
+        // Check if output contains error
+        if (output.includes('Error') || output.includes('error') || output.includes('Exception') || output.includes('exception')) {
+            formattedOutput = '<div class="section-header error">Execution Error:</div><div class="section-content error">';
+        }
+        
+        // Add all lines to the output
+        for (const line of lines) {
+            if (line.trim() !== '') {
+                formattedOutput += line + '\n';
+            }
+        }
+        
+        // Close the section
+        formattedOutput += '</div>';
+        
+        // Add execution stats if available
+        if (output.includes('Execution completed')) {
+            const statsLine = lines.find(line => line.includes('Execution completed'));
+            if (statsLine) {
+                formattedOutput += `<div class="execution-stats">${statsLine}</div>`;
+            }
+        }
+        
+        return formattedOutput;
+    }
+
+    // Clear terminal and AI review
+    function clearTerminalAndAiReview() {
+        const terminalOutput = document.getElementById('terminal-output');
+        const aiReviewContent = document.getElementById('ai-review-content');
+        
+        if (terminalOutput) {
+            terminalOutput.innerHTML = '<div class="section-header">Ready to run your code...</div>';
+        }
+        
+        if (aiReviewContent) {
+            aiReviewContent.innerHTML = '<div class="section-header">AI review will appear here...</div>';
+        }
+    }
+
+    // Toggle sidebar
+    function toggleSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.getElementById('mainContent');
+        
+        sidebar.classList.toggle('active');
+        mainContent.classList.toggle('shifted');
+    }
+
+    // Initialize sidebar toggle button
+    document.getElementById('sidebarToggler').addEventListener('click', toggleSidebar);
+    </script>
+</body>
+</html> 

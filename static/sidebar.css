@@ -1,0 +1,473 @@
+/* Sidebar Styles with Enhanced Scrolling */
+.sidebar {
+    height: 100vh;
+    width: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #1a3a8f;
+    overflow-x: hidden;
+    overflow-y: auto; /* Always enable vertical scrolling */
+    transition: 0.3s;
+    padding-top: 60px;
+    z-index: 1000;
+    /* Hide scrollbar but keep functionality */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.sidebar::-webkit-scrollbar {
+    width: 0;
+    background: transparent; /* make scrollbar transparent */
+    display: none; /* Hide scrollbar but keep functionality */
+}
+
+.sidebar.active {
+    width: 250px;
+    overflow-y: auto; /* Ensure scrolling is always enabled when active */
+    box-shadow: 5px 0 15px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
+}
+
+/* Ensure sidebar content is scrollable on all devices */
+.sidebar ul.nav {
+    height: auto;
+    max-height: none; /* Remove max-height restriction */
+    overflow-y: visible; /* Let the parent container handle scrolling */
+    padding-bottom: 60px; /* Add padding at the bottom for better scrolling experience */
+}
+
+/* Responsive adjustments */
+@media (max-width: 767px) {
+    .main-content.shifted {
+        margin-left: 0;
+        width: 100%;
+    }
+    
+    .sidebar.active {
+        width: 250px;
+        height: 100vh;
+        overflow-y: auto;
+    }
+}
+
+/* Adjustments for smaller height screens */
+@media (max-height: 600px) {
+    .sidebar {
+        padding-top: 40px;
+        overflow-y: auto !important; /* Force scrolling on smaller screens */
+    }
+    
+    .sidebar .nav-link {
+        padding: 10px 20px;
+    }
+    
+    .sidebar.active {
+        overflow-y: auto !important;
+    }
+}
+
+/* Scroll indicator for touch devices */
+.scroll-indicator {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    opacity: 0.7;
+    transition: opacity 0.5s ease;
+    pointer-events: none; /* Ensure it doesn't interfere with clicks */
+}
+
+.scroll-dot {
+    width: 6px;
+    height: 6px;
+    background-color: #fff;
+    border-radius: 50%;
+    margin: 2px 0;
+    opacity: 0.7;
+}
+
+/* Animation for scroll dots */
+@keyframes fadeInOut {
+    0% { opacity: 0.3; }
+    50% { opacity: 1; }
+    100% { opacity: 0.3; }
+}
+
+.scroll-dot:nth-child(1) {
+    animation: fadeInOut 1.5s infinite 0s;
+}
+
+.scroll-dot:nth-child(2) {
+    animation: fadeInOut 1.5s infinite 0.3s;
+}
+
+.scroll-dot:nth-child(3) {
+    animation: fadeInOut 1.5s infinite 0.6s;
+}
+
+/* Enhanced Settings Section Styles */
+.settings-item {
+    position: relative;
+}
+
+.settings-toggle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 15px;
+    transition: all 0.3s ease;
+}
+
+.settings-toggle:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.settings-arrow {
+    font-size: 0.8rem;
+    transition: transform 0.3s ease;
+}
+
+.settings-toggle[aria-expanded="true"] .settings-arrow {
+    transform: rotate(180deg);
+}
+
+.settings-collapse {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    margin: 5px 10px;
+    overflow: hidden;
+}
+
+.settings-panel {
+    padding: 15px;
+    color: #f8f9fa;
+}
+
+.settings-section {
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 15px;
+}
+
+.settings-section:last-child {
+    border-bottom: none;
+    margin-bottom: 10px;
+}
+
+.settings-heading {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #adb5bd;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Theme Selector Styles */
+.theme-selector {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.theme-option {
+    flex: 1;
+    text-align: center;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    border: 2px solid transparent;
+}
+
+.theme-option:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.theme-option.active {
+    border-color: #4361ee;
+    background-color: rgba(67, 97, 238, 0.2);
+}
+
+.theme-preview {
+    height: 30px;
+    border-radius: 4px;
+    margin-bottom: 5px;
+}
+
+.light-theme .theme-preview {
+    background: linear-gradient(to bottom, #f8f9fa, #e9ecef);
+    border: 1px solid #ced4da;
+}
+
+.dark-theme .theme-preview {
+    background: linear-gradient(to bottom, #212529, #343a40);
+    border: 1px solid #495057;
+}
+
+.gradient-theme .theme-preview {
+    background: linear-gradient(135deg, #4776E6, #8E54E9);
+    border: 1px solid #6c5ce7;
+}
+
+.theme-option span {
+    font-size: 0.8rem;
+    color: #dee2e6;
+}
+
+/* Toggle Switch Styles */
+.settings-toggle-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    font-size: 0.9rem;
+}
+
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 22px;
+}
+
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #495057;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .toggle-slider {
+    background-color: #4361ee;
+}
+
+input:focus + .toggle-slider {
+    box-shadow: 0 0 1px #4361ee;
+}
+
+input:checked + .toggle-slider:before {
+    transform: translateX(18px);
+}
+
+/* Range Control Styles */
+.settings-range-item {
+    margin-bottom: 12px;
+}
+
+.range-control {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 5px;
+}
+
+.range-label {
+    font-size: 0.8rem;
+    color: #dee2e6;
+}
+
+.range-label:last-child {
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.settings-range {
+    flex: 1;
+    height: 5px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: #495057;
+    outline: none;
+    border-radius: 10px;
+}
+
+.settings-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: #4361ee;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.settings-range::-moz-range-thumb {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: #4361ee;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+}
+
+.settings-range::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+    background: #3a56d4;
+}
+
+.settings-range::-moz-range-thumb:hover {
+    transform: scale(1.2);
+    background: #3a56d4;
+}
+
+/* Dropdown Styles */
+.settings-dropdown {
+    margin-top: 5px;
+}
+
+.settings-select {
+    width: 100%;
+    padding: 8px 10px;
+    border-radius: 6px;
+    background-color: #495057;
+    color: #f8f9fa;
+    border: 1px solid #6c757d;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.settings-select:focus {
+    border-color: #4361ee;
+    box-shadow: 0 0 0 2px rgba(67, 97, 238, 0.25);
+    outline: none;
+}
+
+.settings-select option {
+    background-color: #343a40;
+    color: #f8f9fa;
+}
+
+/* Settings Footer */
+.settings-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    gap: 10px;
+}
+
+.btn-settings-save, .btn-settings-reset {
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+}
+
+.btn-settings-save {
+    background-color: #4361ee;
+    color: white;
+    flex: 2;
+}
+
+.btn-settings-reset {
+    background-color: transparent;
+    color: #f8f9fa;
+    border: 1px solid #6c757d;
+    flex: 1;
+}
+
+.btn-settings-save:hover {
+    background-color: #3a56d4;
+    transform: translateY(-2px);
+}
+
+.btn-settings-reset:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+/* Animation for settings panel */
+.settings-collapse.collapsing {
+    transition-duration: 0.3s;
+}
+
+.settings-collapse.show {
+    animation: fadeInSettings 0.3s forwards;
+}
+
+@keyframes fadeInSettings {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Scroll indicator styles (existing) */
+.scroll-indicator {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 10px;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 20px;
+    z-index: 10;
+    animation: fadeInOut 2s infinite;
+}
+
+.scroll-dot {
+    width: 6px;
+    height: 6px;
+    background-color: white;
+    border-radius: 50%;
+    opacity: 0.7;
+}
+
+@keyframes fadeInOut {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.8; }
+}
+
+.scroll-dot:nth-child(1) {
+    animation: fadeInOut 2s infinite 0.2s;
+}
+
+.scroll-dot:nth-child(2) {
+    animation: fadeInOut 2s infinite 0.4s;
+}
+
+.scroll-dot:nth-child(3) {
+    animation: fadeInOut 2s infinite 0.6s;
+} 

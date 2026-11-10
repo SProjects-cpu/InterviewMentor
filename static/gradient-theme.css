@@ -1,0 +1,387 @@
+/* Gradient Theme - Neutral Gray Gradients (Left to Right) */
+
+/* Additional components not covered in other CSS files */
+
+/* Profile page components */
+.profile-card {
+    background: linear-gradient(to right, #3d4852, #606f7b) !important;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.profile-card:hover {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+.profile-header {
+    background: linear-gradient(to right, #2d3748, #4a5568) !important;
+    border-radius: 12px 12px 0 0;
+    padding: 20px;
+}
+
+.profile-content {
+    background: linear-gradient(to right, #3d4852, #606f7b) !important;
+    border-radius: 0 0 12px 12px;
+    padding: 20px;
+}
+
+/* Card body styling for all sections */
+.card-body {
+    border-radius: inherit;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+/* Section cards for home page */
+.section-card {
+    background: linear-gradient(to right, #3d4852, #606f7b) !important;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    border-left: 4px solid #2d3748;
+}
+
+.section-card:hover {
+    transform: translateY(-5px);
+    background: linear-gradient(to right, #2d3748, #4a5568) !important;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+.section-card .card-body {
+    background: linear-gradient(to right, #3d4852, #606f7b) !important;
+    border-radius: inherit;
+}
+
+.section-card .card-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    background: linear-gradient(to right, #ffffff, #f1f5f8) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    color: transparent !important;
+}
+
+/* Resume builder components */
+.cv-form-wrapper {
+    background: linear-gradient(to right, #2d3748, #4a5568) !important;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+.cv-preview-wrapper {
+    background: linear-gradient(to right, #3d4852, #606f7b) !important;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+.cv-section {
+    background: linear-gradient(to right, #4a5568, #606f7b) !important;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-left: 3px solid #2d3748;
+    overflow: hidden;
+}
+
+/* Career guidance components */
+.career-card {
+    background: linear-gradient(to right, #3d4852, #606f7b) !important;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.career-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+.career-card .card-body {
+    border-radius: inherit;
+    background: linear-gradient(to right, #3d4852, #606f7b) !important;
+}
+
+.recommendations-container {
+    background: linear-gradient(to right, #2d3748, #4a5568) !important;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+.recommendation-item {
+    background: linear-gradient(to right, #3d4852, #606f7b) !important;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-left: 3px solid #2d3748;
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.recommendation-item:hover {
+    transform: translateX(5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(to right, #2d3748, #4a5568) !important;
+}
+
+/* Result page components */
+.result-container {
+    background: linear-gradient(to right, #2d3748, #4a5568) !important;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+.result-card {
+    background: linear-gradient(to right, #3d4852, #606f7b) !important;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-left: 3px solid #2d3748;
+    overflow: hidden;
+}
+
+.result-card .card-body {
+    border-radius: inherit;
+    background: linear-gradient(to right, #3d4852, #606f7b) !important;
+}
+
+/* Aptitude category cards */
+.category-card {
+    background: linear-gradient(to right, #3d4852, #606f7b) !important;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    border-left: 4px solid #2d3748;
+}
+
+.category-card:hover {
+    transform: translateY(-5px);
+    background: linear-gradient(to right, #2d3748, #4a5568) !important;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+.category-card .card-body {
+    border-radius: inherit;
+    background: linear-gradient(to right, #3d4852, #606f7b) !important;
+}
+
+/* Table components */
+.table {
+    background: linear-gradient(to right, #3d4852, #606f7b) !important;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.table thead {
+    background: linear-gradient(to right, #2d3748, #4a5568) !important;
+}
+
+/* Modal components */
+.modal-content {
+    background: linear-gradient(to right, #3d4852, #606f7b) !important;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.modal-header {
+    background: linear-gradient(to right, #2d3748, #4a5568) !important;
+    border-bottom: none;
+}
+
+.modal-footer {
+    background: linear-gradient(to right, #4a5568, #606f7b) !important;
+    border-top: none;
+}
+
+/* Dropdown components */
+.dropdown-menu {
+    background: linear-gradient(to right, #3d4852, #606f7b) !important;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.dropdown-item:hover {
+    background: linear-gradient(to right, #2d3748, #4a5568) !important;
+}
+
+/* Pagination components */
+.pagination .page-item .page-link {
+    background: linear-gradient(to right, #3d4852, #606f7b) !important;
+    border-color: #2d3748;
+}
+
+.pagination .page-item.active .page-link {
+    background: linear-gradient(to right, #2d3748, #4a5568) !important;
+    border-color: #2d3748;
+}
+
+.pagination .page-item .page-link:hover {
+    background: linear-gradient(to right, #2d3748, #4a5568) !important;
+}
+
+/* Progress bar components */
+.progress {
+    background: linear-gradient(to right, #4a5568, #606f7b) !important;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    background: linear-gradient(to right, #2d3748, #4a5568) !important;
+}
+
+/* Badge components */
+.badge.bg-primary {
+    background: linear-gradient(to right, #2d3748, #4a5568) !important;
+}
+
+.badge.bg-success {
+    background: linear-gradient(to right, #28a745, #218838) !important;
+}
+
+.badge.bg-danger {
+    background: linear-gradient(to right, #dc3545, #c82333) !important;
+}
+
+.badge.bg-warning {
+    background: linear-gradient(to right, #ffc107, #e0a800) !important;
+}
+
+.badge.bg-info {
+    background: linear-gradient(to right, #17a2b8, #138496) !important;
+}
+
+/* Alert components */
+.alert-success {
+    background: linear-gradient(to right, #d4edda, #c3e6cb) !important;
+    border-color: #c3e6cb;
+    color: #155724;
+}
+
+.alert-warning {
+    background: linear-gradient(to right, #fff3cd, #ffeeba) !important;
+    border-color: #ffeeba;
+    color: #856404;
+}
+
+.alert-primary {
+    background: linear-gradient(to right, #cfe2ff, #b6d4fe) !important;
+    border-color: #b6d4fe;
+    color: #084298;
+}
+
+/* Tooltip components */
+.tooltip .tooltip-inner {
+    background: linear-gradient(to right, #2d3748, #4a5568) !important;
+}
+
+/* Popover components */
+.popover {
+    background: linear-gradient(to right, #3d4852, #606f7b) !important;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.popover-header {
+    background: linear-gradient(to right, #2d3748, #4a5568) !important;
+    border-bottom: none;
+}
+
+.popover-body {
+    background: linear-gradient(to right, #3d4852, #606f7b) !important;
+}
+
+/* Toast components */
+.toast {
+    background: linear-gradient(to right, #3d4852, #606f7b) !important;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.toast-header {
+    background: linear-gradient(to right, #2d3748, #4a5568) !important;
+    border-bottom: none;
+}
+
+.toast-body {
+    background: linear-gradient(to right, #3d4852, #606f7b) !important;
+}
+
+/* Interview Mentor Header Gradient */
+.navbar-brand.mx-auto {
+    background: linear-gradient(to right, #ffffff, #f1f5f8) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    color: transparent !important;
+    font-weight: bold !important;
+    font-size: 1.8rem !important;
+    padding: 8px 15px !important;
+    border-radius: 6px !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) !important;
+    letter-spacing: 0.5px !important;
+    transition: all 0.3s ease !important;
+}
+
+.navbar-brand.mx-auto:hover {
+    background: linear-gradient(to right, #f1f5f8, #e6f0ff) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    transform: scale(1.05) !important;
+}
+
+/* Welcome heading gradient to match the header */
+.container h2.text-center {
+    background: linear-gradient(to right, #ffffff, #f1f5f8) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    color: transparent !important;
+    font-weight: bold !important;
+    margin-bottom: 1.5rem !important;
+    padding-bottom: 10px !important;
+    position: relative !important;
+}
+
+.container h2.text-center::after {
+    content: "" !important;
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 100px !important;
+    height: 3px !important;
+    background: linear-gradient(to right, #ffffff, #f1f5f8) !important;
+    border-radius: 3px !important;
+}
+
+/* Navbar background for better contrast with the header */
+.navbar {
+    background: linear-gradient(to right, #2d3748, #4a5568) !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2) !important;
+} 

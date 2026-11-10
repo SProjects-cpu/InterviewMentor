@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Interview Mentor - Career Guidance</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='light-theme.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='gradient-theme.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='sidebar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='aptitude-test.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='modern-glass-theme.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='career-guidance-fix.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='gsap-animations.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='text-color-fix.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='test-description-fix.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='global-text-fix.css') }}">
+    <style>
+        @keyframes gradientBG {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            }
+            50% {
+                transform: scale(1.03);
+                box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            }
+        }
+        
+        @keyframes shimmer {
+            0% {
+                background-position: -100% 0;
+            }
+            100% {
+                background-position: 200% 0;
+            }
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+        
+        body.bg-light {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+        
+        .main-content {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        
+        .navbar {
+            background: linear-gradient(90deg, #4776E6, #8E54E9);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar-brand {
+            color: white !important;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        
+        .container-fluid {
+            background: linear-gradient(90deg, #4776E6, #8E54E9);
+            background-size: 200% 200%;
+            animation: gradientBG 5s ease infinite;
+        }
+        
+        .career-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px;
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 40px;
+            position: relative;
+            padding-bottom: 15px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, #4776E6, #8E54E9);
+            background-size: 200% 200%;
+            animation: gradientBG 5s ease infinite;
+            border-radius: 2px;
+        }
+        
+        .career-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .career-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            border: none;
+            position: relative;
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        
+        .career-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .career-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+            animation: shimmer 2s infinite;
+        }
+        
+        .career-card.path-analysis {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            border-top: 5px solid transparent;
+            border-image: linear-gradient(90deg, #43cea2, #185a9d);
+            border-image-slice: 1;
+        }
+        
+        .career-card.profile-skills {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            border-top: 5px solid transparent;
+            border-image: linear-gradient(90deg, #2193b0, #6dd5ed);
+            border-image-slice: 1;
+        }
+        
+        .career-card.industry-insights {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            border-top: 5px solid transparent;
+            border-image: linear-gradient(90deg, #ff8008, #ffc837);
+            border-image-slice: 1;
+        }
+        
+        .career-card.job-trends {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            border-top: 5px solid transparent;
+            border-image: linear-gradient(90deg, #834d9b, #d04ed6);
+            border-image-slice: 1;
+        }
+        
+        .card-header {
+            padding: 30px 25px 20px;
+            display: flex;
+            align-items: center;
+            background: transparent;
+            border-bottom: none;
+        }
+        
+        .card-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            font-size: 2rem;
+            color: white;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .path-analysis .card-icon {
+            background: linear-gradient(135deg, #43cea2, #185a9d);
+        }
+        
+        .profile-skills .card-icon {
+            background: linear-gradient(135deg, #2193b0, #6dd5ed);
+        }
+        
+        .industry-insights .card-icon {
+            background: linear-gradient(135deg, #ff8008, #ffc837);
+        }
+        
+        .job-trends .card-icon {
+            background: linear-gradient(135deg, #834d9b, #d04ed6);
+        }
+        
+        .card-title h3 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin: 0;
+            color: #333;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05);
+        }
+        
+        .card-body {
+            padding: 0 25px 30px;
+            flex: 1;
+        }
+        
+        .card-content {
+            font-size: 1.05rem;
+            color: #555;
+            line-height: 1.7;
+        }
+        
+        .skill-tag {
+            display: inline-block;
+            padding: 8px 16px;
+            background: linear-gradient(135deg, #e0f7fa, #b2ebf2);
+            color: #0277bd;
+            border-radius: 30px;
+            margin: 6px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        
+        .skill-tag:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .skill-tag i {
+            margin-right: 8px;
+        }
+        
+        .career-path-item {
+            display: flex;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px dashed #e0e0e0;
+            animation: fadeIn 0.5s ease-out forwards;
+            transition: all 0.3s ease;
+        }
+        
+        .career-path-item:hover {
+            transform: translateX(5px);
+        }
+        
+        .career-path-item:last-child {
+            border-bottom: none;
+        }
+        
+        .path-number {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, #43cea2, #185a9d);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 18px;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .path-content {
+            flex: 1;
+        }
+        
+        .path-title {
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+        
+        .path-description {
+            font-size: 0.95rem;
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .industry-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            animation: fadeIn 0.5s ease-out forwards;
+            transition: all 0.3s ease;
+        }
+        
+        .industry-item:hover {
+            transform: translateX(5px);
+        }
+        
+        .industry-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #ff8008, #ffc837);
+            color: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 18px;
+            font-size: 1.2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .trend-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            animation: fadeIn 0.5s ease-out forwards;
+            transition: all 0.3s ease;
+        }
+        
+        .trend-item:hover {
+            transform: translateX(5px);
+        }
+        
+        .trend-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #834d9b, #d04ed6);
+            color: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 18px;
+            font-size: 1.2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .trend-content {
+            flex: 1;
+        }
+        
+        .trend-title {
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+        
+        .trend-description {
+            font-size: 0.95rem;
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .btn-explore {
+            display: inline-block;
+            padding: 12px 28px;
+            background: linear-gradient(90deg, #4776E6, #8E54E9);
+            background-size: 200% 200%;
+            animation: gradientBG 5s ease infinite;
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 25px;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(71, 118, 230, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-explore:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: all 0.6s;
+        }
+        
+        .btn-explore:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(71, 118, 230, 0.4);
+            color: white;
+        }
+        
+        .btn-explore:hover:before {
+            left: 100%;
+        }
+        
+        /* Delay animations for staggered effect */
+        .career-card:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+        
+        .career-card:nth-child(2) {
+            animation-delay: 0.3s;
+        }
+        
+        .career-card:nth-child(3) {
+            animation-delay: 0.5s;
+        }
+        
+        .career-card:nth-child(4) {
+            animation-delay: 0.7s;
+        }
+        
+        .career-path-item:nth-child(1) {
+            animation-delay: 0.2s;
+        }
+        
+        .career-path-item:nth-child(2) {
+            animation-delay: 0.4s;
+        }
+        
+        .career-path-item:nth-child(3) {
+            animation-delay: 0.6s;
+        }
+        
+        .industry-item:nth-child(1) {
+            animation-delay: 0.2s;
+        }
+        
+        .industry-item:nth-child(2) {
+            animation-delay: 0.4s;
+        }
+        
+        .industry-item:nth-child(3) {
+            animation-delay: 0.6s;
+        }
+        
+        .trend-item:nth-child(1) {
+            animation-delay: 0.2s;
+        }
+        
+        .trend-item:nth-child(2) {
+            animation-delay: 0.4s;
+        }
+        
+        .trend-item:nth-child(3) {
+            animation-delay: 0.6s;
+        }
+        
+        .skill-tag:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+        
+        .skill-tag:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .skill-tag:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+        
+        .skill-tag:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+        
+        @media (max-width: 992px) {
+            .career-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .card-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 1.6rem;
+            }
+            
+            .card-title h3 {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h4>Menu</h4>
+            <button class="close-btn" onclick="toggleSidebar()">×</button>
+        </div>
+        <ul class="nav flex-column">
+            <li class="nav-item"><a href="/" class="nav-link"><i class="fas fa-home"></i> Home</a></li>
+            <li class="nav-item"><a href="/resume-builder" class="nav-link"><i class="fas fa-file-alt"></i> Resume Builder</a></li>
+            <li class="nav-item"><a href="/career-guidance" class="nav-link active"><i class="fas fa-graduation-cap"></i> Career Guidance</a></li>
+            <li class="nav-item"><a href="/aptitude" class="nav-link"><i class="fas fa-brain"></i> Aptitude Test</a></li>
+            <li class="nav-item"><a href="/profile" class="nav-link"><i class="fas fa-user"></i> Profile</a></li>
+            
+            <!-- Replace expandable settings with a link to settings page -->
+            <li class="nav-item"><a href="/settings" class="nav-link"><i class="fas fa-cog"></i> Settings</a></li>
+            
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-info-circle"></i> About Us</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-envelope"></i> Contact Details</a></li>
+            <!-- Additional menu items to demonstrate scrolling -->
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-book"></i> Resources</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-chart-line"></i> Progress Tracker</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-certificate"></i> Certifications</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-users"></i> Community</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-question-circle"></i> Help & Support</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-bell"></i> Notifications</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-star"></i> Premium Features</a></li>
+            {% if current_user.is_authenticated %}
+            <li class="nav-item"><a href="/logout" class="nav-link text-danger"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            {% endif %}
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <nav class="navbar">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" id="sidebarToggler">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <h3 class="navbar-brand mx-auto">Interview Mentor</h3>
+            </div>
+        </nav>
+        <div class="container mt-4">
+            <div class="career-container">
+                <h2 class="section-title">Career Guidance Dashboard</h2>
+                
+                <div class="career-grid">
+                    <!-- Career Path Analysis -->
+                    <div class="career-card path-analysis">
+                        <div class="card-header">
+                            <div class="card-icon">
+                                <i class="fas fa-route"></i>
+                            </div>
+                            <div class="card-title">
+                                <h3>Career Path Analysis</h3>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-content">
+                                <p>Based on your profile and skills, here are recommended career paths:</p>
+                                
+                                <div class="career-path-item">
+                                    <div class="path-number">1</div>
+                                    <div class="path-content">
+                                        <div class="path-title">Software Development</div>
+                                        <div class="path-description">Progress from Junior Developer to Senior Developer, then to Technical Lead or Software Architect.</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="career-path-item">
+                                    <div class="path-number">2</div>
+                                    <div class="path-content">
+                                        <div class="path-title">Data Science</div>
+                                        <div class="path-description">Start as a Data Analyst, move to Data Scientist, and eventually become a Data Science Manager or AI Specialist.</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="career-path-item">
+                                    <div class="path-number">3</div>
+                                    <div class="path-content">
+                                        <div class="path-title">Product Management</div>
+                                        <div class="path-description">Begin as a Product Analyst, advance to Product Manager, and ultimately reach Senior Product Manager or Director of Product.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="#" class="btn-explore">Explore More Paths</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Your Profile Skills -->
+                    <div class="career-card profile-skills">
+                        <div class="card-header">
+                            <div class="card-icon">
+                                <i class="fas fa-user-cog"></i>
+                            </div>
+                            <div class="card-title">
+                                <h3>Your Profile Skills</h3>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-content">
+                                <p>These are the skills from your profile that employers are looking for:</p>
+                                
+                                <div class="skills-container">
+                                    {% if user_skills %}
+                                        {% for skill in user_skills %}
+                                            <span class="skill-tag"><i class="fas fa-check-circle"></i> {{ skill }}</span>
+                                        {% endfor %}
+                                    {% else %}
+                                        <p>No skills found in your profile. <a href="/profile">Update your profile</a> to see personalized skill recommendations.</p>
+                                    {% endif %}
+                                </div>
+                                
+                                <p class="mt-4">Recommended skills to develop:</p>
+                                <span class="skill-tag"><i class="fas fa-plus-circle"></i> Cloud Computing</span>
+                                <span class="skill-tag"><i class="fas fa-plus-circle"></i> Machine Learning</span>
+                                <span class="skill-tag"><i class="fas fa-plus-circle"></i> Data Visualization</span>
+                                <span class="skill-tag"><i class="fas fa-plus-circle"></i> UI/UX Design</span>
+                            </div>
+                            <a href="/profile" class="btn-explore">Update Skills</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Industry Insights -->
+                    <div class="career-card industry-insights">
+                        <div class="card-header">
+                            <div class="card-icon">
+                                <i class="fas fa-industry"></i>
+                            </div>
+                            <div class="card-title">
+                                <h3>Industry Insights</h3>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-content">
+                                <p>Latest insights from industries matching your profile:</p>
+                                
+                                <div class="industry-item">
+                                    <div class="industry-icon">
+                                        <i class="fas fa-laptop-code"></i>
+                                    </div>
+                                    <div>
+                                        <strong>Tech Industry:</strong> Growing demand for full-stack developers with experience in cloud technologies and microservices architecture.
+                                    </div>
+                                </div>
+                                
+                                <div class="industry-item">
+                                    <div class="industry-icon">
+                                        <i class="fas fa-chart-line"></i>
+                                    </div>
+                                    <div>
+                                        <strong>Data Analytics:</strong> Companies are investing heavily in data infrastructure and seeking professionals who can translate data into business insights.
+                                    </div>
+                                </div>
+                                
+                                <div class="industry-item">
+                                    <div class="industry-icon">
+                                        <i class="fas fa-robot"></i>
+                                    </div>
+                                    <div>
+                                        <strong>AI & Machine Learning:</strong> Rapid growth in AI applications across industries, with particular focus on natural language processing and computer vision.
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="#" class="btn-explore">View All Insights</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Job Market Trends -->
+                    <div class="career-card job-trends">
+                        <div class="card-header">
+                            <div class="card-icon">
+                                <i class="fas fa-chart-bar"></i>
+                            </div>
+                            <div class="card-title">
+                                <h3>Job Market Trends</h3>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-content">
+                                <p>Current trends in the job market relevant to your profile:</p>
+                                
+                                <div class="trend-item">
+                                    <div class="trend-icon">
+                                        <i class="fas fa-arrow-up"></i>
+                                    </div>
+                                    <div class="trend-content">
+                                        <div class="trend-title">Remote Work Opportunities</div>
+                                        <div class="trend-description">70% increase in remote positions for software developers and data scientists in the last year.</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="trend-item">
+                                    <div class="trend-icon">
+                                        <i class="fas fa-dollar-sign"></i>
+                                    </div>
+                                    <div class="trend-content">
+                                        <div class="trend-title">Salary Trends</div>
+                                        <div class="trend-description">Average salaries for tech roles have increased by 15% with specialized skills commanding premium compensation.</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="trend-item">
+                                    <div class="trend-icon">
+                                        <i class="fas fa-briefcase"></i>
+                                    </div>
+                                    <div class="trend-content">
+                                        <div class="trend-title">Emerging Job Titles</div>
+                                        <div class="trend-description">New roles like "AI Ethics Officer," "Cloud Architect," and "Digital Transformation Specialist" are gaining prominence.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="#" class="btn-explore">Explore Trends</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='sidebar.js') }}"></script>
+    <script src="{{ url_for('static', filename='career-guidance.js') }}"></script>
+    <script src="{{ url_for('static', filename='gsap-animations.js') }}"></script>
+</body>
+</html>

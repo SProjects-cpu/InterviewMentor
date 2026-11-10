@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - Interview Mentor</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='light-theme.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='sidebar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='settings.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='gradient-theme.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-light">
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h4>Menu</h4>
+            <button class="close-btn" onclick="toggleSidebar()">×</button>
+        </div>
+        <ul class="nav flex-column">
+            <li class="nav-item"><a href="/" class="nav-link"><i class="fas fa-home"></i> Home</a></li>
+            <li class="nav-item"><a href="/resume-builder" class="nav-link"><i class="fas fa-file-alt"></i> Resume Builder</a></li>
+            <li class="nav-item"><a href="/career-guidance" class="nav-link"><i class="fas fa-graduation-cap"></i> Career Guidance</a></li>
+            <li class="nav-item"><a href="/aptitude" class="nav-link"><i class="fas fa-brain"></i> Aptitude Test</a></li>
+            <li class="nav-item"><a href="/coding-test" class="nav-link"><i class="fas fa-code"></i> AI Coding Test</a></li>
+            <li class="nav-item"><a href="/profile" class="nav-link"><i class="fas fa-user"></i> Profile</a></li>
+            <li class="nav-item"><a href="/settings" class="nav-link active"><i class="fas fa-cog"></i> Settings</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-info-circle"></i> About Us</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-envelope"></i> Contact Details</a></li>
+            <!-- Additional menu items to demonstrate scrolling -->
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-book"></i> Resources</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-chart-line"></i> Progress Tracker</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-certificate"></i> Certifications</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-users"></i> Community</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-question-circle"></i> Help & Support</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-bell"></i> Notifications</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-star"></i> Premium Features</a></li>
+            <!-- Only show logout option when user is authenticated -->
+            {% if current_user.is_authenticated %}
+            <li class="nav-item"><a href="/logout" class="nav-link text-danger"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            {% endif %}
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <nav class="navbar">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" id="sidebarToggler">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <h3 class="navbar-brand mx-auto">Settings</h3>
+            </div>
+        </nav>
+
+        <div class="container mt-4">
+            <div class="settings-container">
+                <div class="settings-header">
+                    <h1 class="mb-4"><i class="fas fa-cog me-3"></i>Settings</h1>
+                    <p class="text-muted">Customize your Interview Mentor experience</p>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="nav flex-column nav-pills" id="settings-tabs" role="tablist" aria-orientation="vertical">
+                            <button class="nav-link active" id="account-tab" data-bs-toggle="pill" data-bs-target="#account" type="button" role="tab" aria-controls="account" aria-selected="true">
+                                <i class="fas fa-user me-2"></i>Account
+                            </button>
+                            <button class="nav-link" id="appearance-tab" data-bs-toggle="pill" data-bs-target="#appearance" type="button" role="tab" aria-controls="appearance" aria-selected="false">
+                                <i class="fas fa-palette me-2"></i>Appearance
+                            </button>
+                            <button class="nav-link" id="privacy-tab" data-bs-toggle="pill" data-bs-target="#privacy" type="button" role="tab" aria-controls="privacy" aria-selected="false">
+                                <i class="fas fa-shield-alt me-2"></i>Privacy
+                            </button>
+                            <button class="nav-link" id="notifications-tab" data-bs-toggle="pill" data-bs-target="#notifications" type="button" role="tab" aria-controls="notifications" aria-selected="false">
+                                <i class="fas fa-bell me-2"></i>Notifications
+                            </button>
+                            <button class="nav-link" id="accessibility-tab" data-bs-toggle="pill" data-bs-target="#accessibility" type="button" role="tab" aria-controls="accessibility" aria-selected="false">
+                                <i class="fas fa-universal-access me-2"></i>Accessibility
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="tab-content" id="settings-tabContent">
+                            <!-- Account Settings -->
+                            <div class="tab-pane fade show active" id="account" role="tabpanel" aria-labelledby="account-tab">
+                                <div class="settings-section">
+                                    <h2><i class="fas fa-user-circle me-2"></i>Account Information</h2>
+                                    <form id="account-settings">
+                                        <div class="form-group mb-4">
+                                            <label for="username">Username</label>
+                                            <input type="text" class="form-control" id="username" name="username" value="{{ current_user.username if current_user.is_authenticated else '' }}" required>
+                                            <small class="text-muted">Your username is visible to other users</small>
+                                        </div>
+                                        <div class="form-group mb-4">
+                                            <label for="email">Email Address</label>
+                                            <input type="email" class="form-control" id="email" name="email" value="{{ current_user.email if current_user.is_authenticated else '' }}" required>
+                                            <small class="text-muted">We'll never share your email with anyone else</small>
+                                        </div>
+                                        <div class="form-group mb-4">
+                                            <label for="bio">Bio</label>
+                                            <textarea class="form-control" id="bio" name="bio" rows="3" placeholder="Tell us about yourself..."></textarea>
+                                            <small class="text-muted">Optional: Share a brief description about yourself</small>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary"><i class="fas fa-save me-2"></i>Save Changes</button>
+                                    </form>
+                                </div>
+                                
+                                <div class="settings-section">
+                                    <h2><i class="fas fa-key me-2"></i>Change Password</h2>
+                                    <form id="password-settings">
+                                        <div class="form-group mb-4">
+                                            <label for="current-password">Current Password</label>
+                                            <input type="password" class="form-control" id="current-password" name="current-password" required>
+                                        </div>
+                                        <div class="form-group mb-4">
+                                            <label for="new-password">New Password</label>
+                                            <input type="password" class="form-control" id="new-password" name="new-password" required>
+                                            <small class="text-muted">Password must be at least 8 characters long</small>
+                                        </div>
+                                        <div class="form-group mb-4">
+                                            <label for="confirm-password">Confirm New Password</label>
+                                            <input type="password" class="form-control" id="confirm-password" name="confirm-password" required>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary"><i class="fas fa-key me-2"></i>Update Password</button>
+                                    </form>
+                                </div>
+                            </div>
+                            
+                            <!-- Appearance Settings -->
+                            <div class="tab-pane fade" id="appearance" role="tabpanel" aria-labelledby="appearance-tab">
+                                <div class="settings-section">
+                                    <h2><i class="fas fa-moon me-2"></i>Theme Settings</h2>
+                                    <form id="theme-settings">
+                                        <div class="theme-options mb-4">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="theme" id="theme-light" value="light">
+                                                <label class="form-check-label" for="theme-light">
+                                                    <i class="fas fa-sun me-2"></i>Light Theme
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="theme" id="theme-dark" value="dark" checked>
+                                                <label class="form-check-label" for="theme-dark">
+                                                    <i class="fas fa-moon me-2"></i>Dark Theme
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="theme" id="theme-system" value="system">
+                                                <label class="form-check-label" for="theme-system">
+                                                    <i class="fas fa-desktop me-2"></i>Use System Setting
+                                                </label>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group mb-4">
+                                            <label for="font-size">Font Size</label>
+                                            <select class="form-select" id="font-size" name="font-size">
+                                                <option value="small">Small</option>
+                                                <option value="medium" selected>Medium</option>
+                                                <option value="large">Large</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <button type="submit" class="btn btn-primary"><i class="fas fa-save me-2"></i>Save Changes</button>
+                                    </form>
+                                </div>
+                            </div>
+                            
+                            <!-- Privacy Settings -->
+                            <div class="tab-pane fade" id="privacy" role="tabpanel" aria-labelledby="privacy-tab">
+                                <div class="settings-section">
+                                    <h2><i class="fas fa-user-shield me-2"></i>Privacy Settings</h2>
+                                    <form id="privacy-settings">
+                                        <div class="form-group mb-4">
+                                            <label for="profile-visibility">Profile Visibility</label>
+                                            <select class="form-select" id="profile-visibility" name="profile-visibility">
+                                                <option value="public">Public - Anyone can view your profile</option>
+                                                <option value="registered">Registered Users - Only registered users can view your profile</option>
+                                                <option value="private" selected>Private - Only you can view your profile</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="form-check form-switch mb-3">
+                                            <input class="form-check-input" type="checkbox" id="activity-tracking" name="activity-tracking" checked>
+                                            <label class="form-check-label" for="activity-tracking">
+                                                Activity Tracking
+                                            </label>
+                                            <small class="text-muted d-block mt-1">Allow us to track your activity to improve your experience</small>
+                                        </div>
+                                        
+                                        <div class="form-check form-switch mb-4">
+                                            <input class="form-check-input" type="checkbox" id="data-collection" name="data-collection" checked>
+                                            <label class="form-check-label" for="data-collection">
+                                                Data Collection
+                                            </label>
+                                            <small class="text-muted d-block mt-1">Allow us to collect data to improve our services</small>
+                                        </div>
+                                        
+                                        <button type="submit" class="btn btn-primary"><i class="fas fa-save me-2"></i>Save Changes</button>
+                                    </form>
+                                </div>
+                                
+                                <div class="settings-section">
+                                    <h2><i class="fas fa-trash-alt me-2"></i>Data Management</h2>
+                                    <p>Manage your personal data and account information.</p>
+                                    <button class="btn btn-outline-danger" id="export-data"><i class="fas fa-file-export me-2"></i>Export My Data</button>
+                                    <button class="btn btn-outline-danger mt-2" id="delete-account"><i class="fas fa-user-times me-2"></i>Delete My Account</button>
+                                </div>
+                            </div>
+                            
+                            <!-- Notification Settings -->
+                            <div class="tab-pane fade" id="notifications" role="tabpanel" aria-labelledby="notifications-tab">
+                                <div class="settings-section">
+                                    <h2><i class="fas fa-bell me-2"></i>Notification Preferences</h2>
+                                    <form id="notification-settings">
+                                        <div class="form-check form-switch mb-3">
+                                            <input class="form-check-input" type="checkbox" id="email-notifications" name="email-notifications" checked>
+                                            <label class="form-check-label" for="email-notifications">
+                                                Email Notifications
+                                            </label>
+                                            <small class="text-muted d-block mt-1">Receive notifications via email</small>
+                                        </div>
+                                        
+                                        <div class="form-check form-switch mb-3">
+                                            <input class="form-check-input" type="checkbox" id="browser-notifications" name="browser-notifications" checked>
+                                            <label class="form-check-label" for="browser-notifications">
+                                                Browser Notifications
+                                            </label>
+                                            <small class="text-muted d-block mt-1">Receive notifications in your browser</small>
+                                        </div>
+                                        
+                                        <div class="form-check form-switch mb-3">
+                                            <input class="form-check-input" type="checkbox" id="feedback-notifications" name="feedback-notifications" checked>
+                                            <label class="form-check-label" for="feedback-notifications">
+                                                Interview Feedback
+                                            </label>
+                                            <small class="text-muted d-block mt-1">Receive notifications about interview feedback</small>
+                                        </div>
+                                        
+                                        <div class="form-check form-switch mb-4">
+                                            <input class="form-check-input" type="checkbox" id="marketing-notifications" name="marketing-notifications">
+                                            <label class="form-check-label" for="marketing-notifications">
+                                                Marketing Communications
+                                            </label>
+                                            <small class="text-muted d-block mt-1">Receive updates about new features and promotions</small>
+                                        </div>
+                                        
+                                        <button type="submit" class="btn btn-primary"><i class="fas fa-save me-2"></i>Save Changes</button>
+                                    </form>
+                                </div>
+                            </div>
+                            
+                            <!-- Accessibility Settings -->
+                            <div class="tab-pane fade" id="accessibility" role="tabpanel" aria-labelledby="accessibility-tab">
+                                <div class="settings-section">
+                                    <h2><i class="fas fa-universal-access me-2"></i>Accessibility Options</h2>
+                                    <form id="accessibility-settings">
+                                        <div class="form-check form-switch mb-3">
+                                            <input class="form-check-input" type="checkbox" id="high-contrast" name="high-contrast">
+                                            <label class="form-check-label" for="high-contrast">
+                                                High Contrast Mode
+                                            </label>
+                                            <small class="text-muted d-block mt-1">Increase contrast for better visibility</small>
+                                        </div>
+                                        
+                                        <div class="form-check form-switch mb-3">
+                                            <input class="form-check-input" type="checkbox" id="reduce-animations" name="reduce-animations">
+                                            <label class="form-check-label" for="reduce-animations">
+                                                Reduce Animations
+                                            </label>
+                                            <small class="text-muted d-block mt-1">Minimize motion effects throughout the application</small>
+                                        </div>
+                                        
+                                        <div class="form-check form-switch mb-4">
+                                            <input class="form-check-input" type="checkbox" id="screen-reader" name="screen-reader">
+                                            <label class="form-check-label" for="screen-reader">
+                                                Screen Reader Support
+                                            </label>
+                                            <small class="text-muted d-block mt-1">Optimize for screen readers and assistive technologies</small>
+                                        </div>
+                                        
+                                        <button type="submit" class="btn btn-primary"><i class="fas fa-save me-2"></i>Save Changes</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='sidebar.js') }}"></script>
+    <script src="{{ url_for('static', filename='settings.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,521 @@
+/* Career Guidance Text Visibility Fix */
+
+/* Override text colors for better visibility with glassmorphic UI */
+.career-container {
+    color: #ffffff !important;
+    padding: var(--spacing-lg) !important;
+    max-width: 1400px !important;
+    margin: 0 auto !important;
+    position: relative !important;
+    z-index: 1 !important;
+}
+
+.section-title {
+    color: #ffffff !important;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+    margin-bottom: 2.5rem !important;
+    font-size: 2.5rem !important;
+    font-weight: 800 !important;
+    letter-spacing: -0.5px !important;
+    position: relative !important;
+    display: inline-block !important;
+    overflow: hidden !important;
+    padding-bottom: 0.5rem !important;
+}
+
+.section-title:after {
+    content: '' !important;
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 4px !important;
+    background: linear-gradient(90deg, var(--accent-color-1), var(--accent-color-2)) !important;
+    border-radius: 4px !important;
+    transform-origin: left !important;
+    animation: titleBarSlide 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards !important;
+}
+
+@keyframes titleBarSlide {
+    0% { transform: scaleX(0); }
+    100% { transform: scaleX(1); }
+}
+
+/* Card styling fixes */
+.career-card {
+    background: var(--card-bg) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    border: 1px solid var(--card-border) !important;
+    box-shadow: 0 15px 35px 0 var(--card-shadow) !important;
+    margin-bottom: 30px !important;
+    height: auto !important;
+    min-height: 520px !important;
+    border-radius: var(--border-radius-lg) !important;
+    transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) !important;
+    transform-style: preserve-3d !important;
+    position: relative !important;
+    overflow: hidden !important;
+    animation: cardAppear 0.8s cubic-bezier(0.25, 1, 0.5, 1) backwards !important;
+}
+
+.career-card:nth-child(1) { animation-delay: 0.1s !important; }
+.career-card:nth-child(2) { animation-delay: 0.2s !important; }
+.career-card:nth-child(3) { animation-delay: 0.3s !important; }
+.career-card:nth-child(4) { animation-delay: 0.4s !important; }
+
+@keyframes cardAppear {
+    0% { 
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+    }
+    100% { 
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Interactive hover effects */
+.career-card:hover {
+    transform: translateY(-15px) scale(1.02) rotateX(2deg) rotateY(2deg) !important;
+    box-shadow: 0 25px 50px 0 rgba(0, 0, 0, 0.3) !important;
+    border-color: rgba(255, 255, 255, 0.4) !important;
+    z-index: 2 !important;
+}
+
+/* Card glow effect on hover */
+.career-card::before {
+    content: '' !important;
+    position: absolute !important;
+    top: -50% !important;
+    left: -50% !important;
+    width: 200% !important;
+    height: 200% !important;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%) !important;
+    opacity: 0 !important;
+    transition: opacity 0.6s ease !important;
+    pointer-events: none !important;
+    z-index: -1 !important;
+}
+
+.career-card:hover::before {
+    opacity: 1 !important;
+}
+
+/* Card border styling with unique gradients for each card type */
+.career-card.path-analysis,
+.career-card.profile-skills,
+.career-card.industry-insights,
+.career-card.job-trends {
+    background: var(--card-bg) !important;
+    border-top: 5px solid transparent !important;
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+.career-card.path-analysis {
+    border-image: linear-gradient(90deg, #43cea2, #185a9d) !important;
+    border-image-slice: 1 !important;
+}
+
+.career-card.profile-skills {
+    border-image: linear-gradient(90deg, #2193b0, #6dd5ed) !important;
+    border-image-slice: 1 !important;
+}
+
+.career-card.industry-insights {
+    border-image: linear-gradient(90deg, #ff8008, #ffc837) !important;
+    border-image-slice: 1 !important;
+}
+
+.career-card.job-trends {
+    border-image: linear-gradient(90deg, #834d9b, #d04ed6) !important;
+    border-image-slice: 1 !important;
+}
+
+/* Animated card header with icon */
+.card-header {
+    padding: 30px 25px 20px !important;
+    display: flex !important;
+    align-items: center !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+.card-icon {
+    font-size: 2.5rem !important;
+    margin-right: 20px !important;
+    color: var(--text-primary) !important;
+    background: linear-gradient(135deg, var(--accent-color-1), var(--accent-color-2)) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    animation: iconPulse 3s infinite alternate ease-in-out !important;
+}
+
+@keyframes iconPulse {
+    0% { transform: scale(1); opacity: 0.8; }
+    100% { transform: scale(1.15); opacity: 1; }
+}
+
+/* Enhanced card title styling */
+.card-title h3 {
+    color: #ffffff !important;
+    font-size: 1.7rem !important;
+    font-weight: 700 !important;
+    margin-bottom: 0.5rem !important;
+    letter-spacing: -0.5px !important;
+    position: relative !important;
+    display: inline-block !important;
+    background: linear-gradient(90deg, var(--text-primary), rgba(255, 255, 255, 0.8)) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+}
+
+/* Card content with improved readability */
+.card-content {
+    padding: 25px !important;
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    position: relative !important;
+}
+
+.card-content p {
+    color: #ffffff !important;
+    font-weight: 500 !important;
+    margin-bottom: 1.5rem !important;
+    font-size: 1.05rem !important;
+    line-height: 1.7 !important;
+    letter-spacing: 0.2px !important;
+    opacity: 0.9 !important;
+}
+
+/* Path items with interactive hover effects */
+.career-path-item {
+    padding: 15px !important;
+    border-radius: var(--border-radius-sm) !important;
+    margin-bottom: 15px !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    transition: all 0.3s ease !important;
+    transform-origin: left !important;
+}
+
+.career-path-item:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+    transform: translateX(5px) scale(1.02) !important;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1) !important;
+}
+
+.path-title {
+    color: #ffffff !important;
+    font-weight: 600 !important;
+    font-size: 1.1rem !important;
+    margin-bottom: 5px !important;
+    display: block !important;
+}
+
+.path-description {
+    color: #ffffff !important;
+    font-size: 0.95rem !important;
+    line-height: 1.6 !important;
+    opacity: 0.9 !important;
+}
+
+/* Industry items with hover effects */
+.industry-item, .trend-item {
+    padding: 15px !important;
+    margin-bottom: 15px !important;
+    border-radius: var(--border-radius-sm) !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    transition: all 0.3s ease !important;
+}
+
+.industry-item:hover, .trend-item:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+    transform: translateY(-5px) !important;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15) !important;
+}
+
+.industry-item strong, .trend-title {
+    color: #ffffff !important;
+    font-weight: 600 !important;
+    font-size: 1.1rem !important;
+    margin-bottom: 5px !important;
+    display: block !important;
+}
+
+.industry-item div, .trend-description {
+    color: #ffffff !important;
+    font-size: 0.95rem !important;
+    line-height: 1.6 !important;
+    opacity: 0.9 !important;
+}
+
+/* Enhanced button styling with animations */
+.btn-explore {
+    background: linear-gradient(135deg, var(--accent-color-1), var(--accent-color-2)) !important;
+    color: white !important;
+    border: none !important;
+    padding: 12px 25px !important;
+    border-radius: 50px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.5px !important;
+    text-transform: uppercase !important;
+    font-size: 0.9rem !important;
+    transition: all 0.3s ease !important;
+    position: relative !important;
+    overflow: hidden !important;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2) !important;
+    margin-top: auto !important;
+    align-self: flex-start !important;
+    z-index: 1 !important;
+}
+
+.btn-explore::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: -100% !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent) !important;
+    transition: all 0.6s ease !important;
+    z-index: -1 !important;
+}
+
+.btn-explore:hover {
+    transform: translateY(-3px) !important;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3) !important;
+    background: linear-gradient(135deg, var(--accent-color-2), var(--accent-color-1)) !important;
+}
+
+.btn-explore:hover::before {
+    left: 100% !important;
+    transition: all 0.6s ease !important;
+}
+
+/* Skills container with interactive tags */
+.skills-container {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 10px !important;
+    margin-top: 15px !important;
+    margin-bottom: 25px !important;
+}
+
+.skill-tag {
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: var(--text-primary) !important;
+    padding: 8px 15px !important;
+    border-radius: 50px !important;
+    font-size: 0.85rem !important;
+    font-weight: 500 !important;
+    display: flex !important;
+    align-items: center !important;
+    transition: all 0.3s ease !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    cursor: pointer !important;
+    animation: tagAppear 0.5s backwards !important;
+}
+
+.skill-tag:nth-child(1) { animation-delay: 0.1s !important; }
+.skill-tag:nth-child(2) { animation-delay: 0.15s !important; }
+.skill-tag:nth-child(3) { animation-delay: 0.2s !important; }
+.skill-tag:nth-child(4) { animation-delay: 0.25s !important; }
+.skill-tag:nth-child(5) { animation-delay: 0.3s !important; }
+.skill-tag:nth-child(6) { animation-delay: 0.35s !important; }
+
+@keyframes tagAppear {
+    0% { 
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    100% { 
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.skill-tag:hover {
+    background: rgba(255, 255, 255, 0.2) !important;
+    transform: translateY(-3px) !important;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1) !important;
+    border-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+.skill-tag i {
+    margin-right: 8px !important;
+    font-size: 0.9rem !important;
+    color: var(--accent-color-2) !important;
+}
+
+/* Form control styling */
+.form-control {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    color: var(--text-primary) !important;
+    border-radius: var(--border-radius-md) !important;
+    padding: 12px 20px !important;
+    font-size: 1rem !important;
+    transition: all 0.3s ease !important;
+    backdrop-filter: blur(5px) !important;
+    -webkit-backdrop-filter: blur(5px) !important;
+}
+
+.form-control:focus {
+    background: rgba(255, 255, 255, 0.15) !important;
+    border-color: var(--accent-color-2) !important;
+    box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.3) !important;
+    outline: none !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .career-grid {
+        grid-template-columns: 1fr !important;
+        gap: 30px !important;
+    }
+    
+    .career-card {
+        min-height: auto !important;
+    }
+    
+    .section-title {
+        font-size: 2.2rem !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .card-header {
+        flex-direction: column !important;
+        text-align: center !important;
+        padding: 25px 20px 15px !important;
+    }
+    
+    .card-icon {
+        margin-right: 0 !important;
+        margin-bottom: 15px !important;
+    }
+    
+    .btn-explore {
+        width: 100% !important;
+        text-align: center !important;
+    }
+}
+
+/* Floating particles for background effect */
+.particle-container {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    pointer-events: none !important;
+    z-index: 0 !important;
+    overflow: hidden !important;
+}
+
+.particle {
+    position: absolute !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-radius: 50% !important;
+    pointer-events: none !important;
+    animation: floatParticle 15s infinite linear !important;
+}
+
+@keyframes floatParticle {
+    0% {
+        transform: translateY(0) rotate(0deg);
+    }
+    100% {
+        transform: translateY(-100vh) rotate(360deg);
+    }
+}
+
+/* Loading animation for dynamic content */
+.loading-animation {
+    width: 100% !important;
+    height: 4px !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-radius: 4px !important;
+    overflow: hidden !important;
+    position: relative !important;
+    margin: 20px 0 !important;
+}
+
+.loading-animation::after {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: -50% !important;
+    width: 50% !important;
+    height: 100% !important;
+    background: linear-gradient(90deg, transparent, var(--accent-color-2), transparent) !important;
+    animation: loadingSlide 1.5s infinite !important;
+}
+
+@keyframes loadingSlide {
+    0% { left: -50%; }
+    100% { left: 100%; }
+}
+
+/* Tooltip styling */
+.career-tooltip {
+    position: absolute !important;
+    background: rgba(0, 0, 0, 0.8) !important;
+    color: white !important;
+    padding: 10px 15px !important;
+    border-radius: var(--border-radius-sm) !important;
+    font-size: 0.9rem !important;
+    z-index: 100 !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2) !important;
+    max-width: 250px !important;
+}
+
+.career-tooltip.visible {
+    opacity: 1 !important;
+}
+
+/* Scroll indicator */
+.scroll-indicator {
+    position: fixed !important;
+    bottom: 30px !important;
+    right: 30px !important;
+    width: 50px !important;
+    height: 50px !important;
+    border-radius: 50% !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+    backdrop-filter: blur(5px) !important;
+    -webkit-backdrop-filter: blur(5px) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: var(--text-primary) !important;
+    font-size: 1.2rem !important;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2) !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    opacity: 0 !important;
+    transform: translateY(20px) !important;
+    z-index: 100 !important;
+}
+
+.scroll-indicator.visible {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}
+
+.scroll-indicator:hover {
+    background: rgba(255, 255, 255, 0.2) !important;
+    transform: translateY(-5px) !important;
+} 

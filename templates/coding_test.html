@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Interview Mentor - AI Coding Test</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='light-theme.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='gradient-theme.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='sidebar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='coding-test.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='text-color-fix.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='test-description-fix.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='global-text-fix.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='color-accessibility-fix.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='sidebar-fix.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='profile-fix.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='code-editor-fix.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='form-button-fix.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/firacode@6.2.0/distr/fira_code.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+</head>
+<body class="bg-light">
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h4>Menu</h4>
+            <button class="close-btn" onclick="toggleSidebar()">×</button>
+        </div>
+        <ul class="nav flex-column">
+            <li class="nav-item"><a href="/" class="nav-link"><i class="fas fa-home"></i> Home</a></li>
+            <li class="nav-item"><a href="/resume-builder" class="nav-link"><i class="fas fa-file-alt"></i> Resume Builder</a></li>
+            <li class="nav-item"><a href="/career-guidance" class="nav-link"><i class="fas fa-graduation-cap"></i> Career Guidance</a></li>
+            <li class="nav-item"><a href="/aptitude" class="nav-link"><i class="fas fa-brain"></i> Aptitude Test</a></li>
+            <li class="nav-item"><a href="/coding-test" class="nav-link active"><i class="fas fa-code"></i> AI Coding Test</a></li>
+            <li class="nav-item"><a href="/profile" class="nav-link"><i class="fas fa-user"></i> Profile</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-cog"></i> Settings</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-info-circle"></i> About Us</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-envelope"></i> Contact Details</a></li>
+            <!-- Only show logout option when user is authenticated -->
+            {% if current_user.is_authenticated %}
+            <li class="nav-item"><a href="/logout" class="nav-link text-danger"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            {% endif %}
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <nav class="navbar">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" id="sidebarToggler">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <h3 class="navbar-brand mx-auto">AI Coding Test</h3>
+            </div>
+        </nav>
+        
+        <div class="container mt-4">
+            <div class="coding-test-container animate__animated animate__fadeIn">
+                <div class="coding-test-header">
+                    <div class="coding-header-icon mb-3">
+                        <i class="fas fa-laptop-code fa-3x"></i>
+                    </div>
+                    <h3>Master Your Coding Skills</h3>
+                    <p>Practice coding challenges with real-time AI feedback to prepare for technical interviews</p>
+                </div>
+                
+                <div class="coding-test-content">
+                    <div class="row">
+                        <div class="col-md-6 mb-4 animate__animated animate__fadeInLeft animate__delay-1s">
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-laptop-code"></i>
+                                </div>
+                                <div class="feature-content">
+                                    <h4>Coding Challenges</h4>
+                                    <p>Solve algorithmic problems with varying difficulty levels to improve your problem-solving skills.</p>
+                                    <a href="/coding-test/challenges" class="btn editor-btn mt-2">View Challenges</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6 mb-4 animate__animated animate__fadeInRight animate__delay-1s">
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-dumbbell"></i>
+                                </div>
+                                <div class="feature-content">
+                                    <h4>Practice Mode</h4>
+                                    <p>Practice coding with pre-defined templates and get instant AI feedback on your solutions.</p>
+                                    <a href="/coding-test/practice" class="btn editor-btn mt-2">Start Practice</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="ai-features mt-4 animate__animated animate__fadeIn animate__delay-3s">
+                        <h4 class="mb-3">AI-Powered Features</h4>
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <div class="ai-feature-item">
+                                    <i class="fas fa-robot"></i>
+                                    <span>Real-time Code Execution</span>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="ai-feature-item">
+                                    <i class="fas fa-search"></i>
+                                    <span>Code Analysis</span>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="ai-feature-item">
+                                    <i class="fas fa-lightbulb"></i>
+                                    <span>Optimization Suggestions</span>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="ai-feature-item">
+                                    <i class="fas fa-bug"></i>
+                                    <span>Bug Detection</span>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="ai-feature-item">
+                                    <i class="fas fa-code-branch"></i>
+                                    <span>Alternative Approaches</span>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="ai-feature-item">
+                                    <i class="fas fa-graduation-cap"></i>
+                                    <span>Learning Resources</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="languages-section mt-5 animate__animated animate__fadeIn animate__delay-3s">
+                        <h4 class="text-center mb-4">Supported Programming Languages</h4>
+                        <div class="row justify-content-center">
+                            <div class="col-md-3 col-6 mb-4 text-center">
+                                <div class="language-icon">
+                                    <i class="fab fa-python fa-3x"></i>
+                                    <p>Python</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-6 mb-4 text-center">
+                                <div class="language-icon">
+                                    <i class="fab fa-js fa-3x"></i>
+                                    <p>JavaScript</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-6 mb-4 text-center">
+                                <div class="language-icon">
+                                    <i class="fab fa-java fa-3x"></i>
+                                    <p>Java</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-6 mb-4 text-center">
+                                <div class="language-icon">
+                                    <i class="fas fa-code fa-3x"></i>
+                                    <p>C++</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="cta-section text-center mt-5 animate__animated animate__fadeIn animate__delay-4s">
+                        <h4>Ready to improve your coding skills?</h4>
+                        <p class="mb-4">Start practicing now and prepare for your next technical interview!</p>
+                        <a href="/coding-test/challenges" class="btn btn-lg btn-primary">Get Started <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='sidebar.js') }}"></script>
+    <style>
+        .coding-header-icon {
+            background: linear-gradient(135deg, #1a3a8f, #8e44ad); /* Blue to purple gradient */
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .coding-header-icon::before {
+            content: "";
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            width: calc(100% + 20px);
+            height: calc(100% + 20px);
+            background: linear-gradient(135deg, rgba(26, 58, 143, 0.5), rgba(142, 68, 173, 0.5));
+            z-index: -1;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        .coding-header-icon i {
+            color: white;
+            filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.3));
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(0.95);
+                opacity: 0.7;
+            }
+            50% {
+                transform: scale(1.05);
+                opacity: 0.9;
+            }
+            100% {
+                transform: scale(0.95);
+                opacity: 0.7;
+            }
+        }
+        
+        .language-icon {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .language-icon::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(26, 58, 143, 0.1), rgba(142, 68, 173, 0.1)); /* Blue to purple gradient with low opacity */
+            z-index: 0;
+        }
+        
+        .language-icon:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .language-icon i {
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2));
+        }
+        
+        .language-icon p {
+            font-weight: 500;
+            margin-bottom: 0;
+            position: relative;
+            z-index: 1;
+            color: #333 !important;
+        }
+        
+        .fab.fa-python {
+            color: #3776AB;
+        }
+        
+        .fab.fa-js {
+            color: #F7DF1E;
+        }
+        
+        .fab.fa-java {
+            color: #007396;
+        }
+        
+        /* Enhanced feature icon styling */
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #1a3a8f, #8e44ad); /* Blue to purple gradient */
+            color: white;
+            font-size: 1.8rem;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .feature-icon:hover {
+            transform: translateY(-5px) rotate(5deg);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .feature-card {
+            background-color: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .feature-content h4 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+        
+        /* AI feature item styling */
+        .ai-feature-item {
+            display: flex;
+            align-items: center;
+            background-color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .ai-feature-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+        }
+        
+        .ai-feature-item i {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4285f4, #34a853); /* Google-inspired gradient */
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        .ai-feature-item span {
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .ai-features h4 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #333;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .ai-features h4::after {
+            content: "";
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 50px;
+            height: 4px;
+            background: linear-gradient(135deg, #4285f4, #34a853);
+            border-radius: 2px;
+        }
+        
+        .languages-section h4 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #333;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .languages-section h4::after {
+            content: "";
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 4px;
+            background: linear-gradient(135deg, #3776AB, #F7DF1E);
+            border-radius: 2px;
+        }
+        
+        .cta-section {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .cta-section h4 {
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+        
+        .cta-section .btn-primary {
+            background: linear-gradient(135deg, #4285f4, #34a853);
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 30px;
+            font-weight: 500;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+        }
+        
+        .cta-section .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+    </style>
+</body>
+</html> 

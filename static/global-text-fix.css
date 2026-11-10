@@ -1,0 +1,259 @@
+/* Global Text Color Fix - Ensures all text descriptions are black throughout the project */
+
+/* Global text color reset for description elements */
+.description, 
+.test-description, 
+.category-description, 
+.card-text, 
+.item-description, 
+.content-description,
+.info-description,
+p.description,
+div.description,
+span.description,
+.text-description,
+.section-description,
+.feature-description,
+.product-description,
+.service-description,
+.about-description,
+.profile-description,
+.job-description,
+.company-description,
+.project-description,
+.task-description,
+.event-description,
+.course-description,
+.program-description,
+.module-description,
+.challenge-description,
+.question-description,
+.answer-description,
+.result-description,
+.feedback-description,
+.review-description,
+.comment-description,
+.note-description,
+.detail-description,
+.summary-description,
+.overview-description,
+.feature-content p,
+.ai-feature-item span,
+p,
+.form-control,
+input,
+textarea,
+.register-title,
+.login-title,
+.feature-content h4,
+.ai-features h4,
+.languages-section h4,
+.cta-section h4,
+.cta-section p {
+    color: #000000 !important;
+}
+
+/* Specific fixes for test cards */
+.test-card .test-description,
+.test-card .test-body .test-description,
+.test-card p.test-description,
+.test-card > .test-body > p.test-description,
+div.test-card div.test-body p.test-description,
+.tests-grid .test-card .test-description,
+.test-card .test-body p[class="test-description"],
+.test-card .test-body p[class*="test-description"],
+.test-card .test-meta,
+.test-card .test-meta-item {
+    color: #000000 !important;
+}
+
+/* Specific fixes for category cards */
+.category-card .category-description,
+.category-card .category-body .category-description,
+.category-card p.category-description,
+.category-card > .category-body > p.category-description,
+div.category-card div.category-body p.category-description,
+.categories-grid .category-card .category-description,
+.category-info p {
+    color: #000000 !important;
+}
+
+/* Ensure all paragraph elements in cards have black text */
+.card p,
+.test-card p,
+.category-card p,
+.info-card p,
+.feature-card p,
+.service-card p,
+.product-card p,
+.profile-card p,
+.job-card p,
+.company-card p,
+.project-card p,
+.task-card p,
+.event-card p,
+.course-card p,
+.program-card p,
+.module-card p,
+.challenge-card p,
+.section-card p {
+    color: #000000 !important;
+}
+
+/* Fix for text in specific sections */
+.aptitude-container p,
+.career-guidance-container p,
+.resume-builder-container p,
+.profile-container p,
+.settings-container p,
+.about-container p,
+.contact-container p,
+.resources-container p,
+.progress-tracker-container p,
+.certifications-container p,
+.community-container p,
+.help-support-container p,
+.notifications-container p,
+.premium-features-container p,
+.aptitude-header p {
+    color: #000000 !important;
+}
+
+/* Fix for text in specific components */
+.question-text,
+.answer-text,
+.option-text,
+.result-text,
+.feedback-text,
+.review-text,
+.comment-text,
+.note-text,
+.detail-text,
+.summary-text,
+.overview-text,
+.performance-message {
+    color: #000000 !important;
+}
+
+/* Fix for text in specific elements */
+.test-meta,
+.test-meta-item span,
+.test-meta-item {
+    color: #000000 !important;
+}
+
+/* Override any inline styles with !important */
+[style*="color"] {
+    color: #000000 !important;
+}
+
+/* Exception for elements that should maintain their original colors */
+.btn,
+.btn-primary,
+.btn-secondary,
+.btn-success,
+.btn-danger,
+.btn-warning,
+.btn-info,
+.btn-light,
+.btn-dark,
+.btn-link,
+.btn-outline-primary,
+.btn-outline-secondary,
+.btn-outline-success,
+.btn-outline-danger,
+.btn-outline-warning,
+.btn-outline-info,
+.btn-outline-light,
+.btn-outline-dark,
+.nav-link,
+.navbar-brand,
+.badge,
+.alert,
+.progress-bar,
+i.fas,
+i.far,
+i.fab,
+i.fa,
+.icon,
+.difficulty,
+.difficulty.easy,
+.difficulty.medium,
+.difficulty.hard {
+    color: inherit !important;
+}
+
+/* Fix for specific elements that should have white text */
+.bg-dark,
+.bg-primary,
+.bg-secondary,
+.bg-success,
+.bg-danger,
+.bg-warning,
+.bg-info,
+.navbar-dark,
+.sidebar:not(.bg-light):not(.light-theme),
+.footer-dark,
+.header-dark {
+    color: #ffffff !important;
+}
+
+/* Fix for specific elements that should have white text - nested elements */
+.bg-dark *:not(.btn):not(i):not(.icon):not(.badge):not(.alert):not(.progress-bar):not(.nav-link):not(.navbar-brand):not(.difficulty),
+.bg-primary *:not(.btn):not(i):not(.icon):not(.badge):not(.alert):not(.progress-bar):not(.nav-link):not(.navbar-brand):not(.difficulty),
+.bg-secondary *:not(.btn):not(i):not(.icon):not(.badge):not(.alert):not(.progress-bar):not(.nav-link):not(.navbar-brand):not(.difficulty),
+.bg-success *:not(.btn):not(i):not(.icon):not(.badge):not(.alert):not(.progress-bar):not(.nav-link):not(.navbar-brand):not(.difficulty),
+.bg-danger *:not(.btn):not(i):not(.icon):not(.badge):not(.alert):not(.progress-bar):not(.nav-link):not(.navbar-brand):not(.difficulty),
+.bg-warning *:not(.btn):not(i):not(.icon):not(.badge):not(.alert):not(.progress-bar):not(.nav-link):not(.navbar-brand):not(.difficulty),
+.bg-info *:not(.btn):not(i):not(.icon):not(.badge):not(.alert):not(.progress-bar):not(.nav-link):not(.navbar-brand):not(.difficulty) {
+    color: #ffffff !important;
+}
+
+/* Specific fix for AI coding test page */
+.coding-test-header h3,
+.coding-test-header p,
+.feature-content h4,
+.feature-content p,
+.ai-features h4,
+.ai-feature-item span,
+.languages-section h4,
+.language-icon p,
+.cta-section h4,
+.cta-section p,
+.challenge-card h4,
+.challenge-card p,
+.challenge-body p,
+.challenge-meta .difficulty,
+.challenge-meta .time,
+.info-banner h5,
+.info-banner p,
+.practice-header h4,
+.challenge-description h4,
+.question-description,
+.practice-tip h5,
+.practice-tip p,
+.practice-resources h5,
+.practice-resources ul li a {
+    color: #000000 !important;
+}
+
+/* Form input specific fixes */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="tel"],
+input[type="url"],
+textarea,
+select,
+.form-control {
+    color: #000000 !important;
+}
+
+/* Login and register page specific fixes */
+.register-title,
+.login-title,
+.login-form label,
+.register-form label {
+    color: #000000 !important;
+} 

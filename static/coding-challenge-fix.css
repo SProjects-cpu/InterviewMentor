@@ -1,0 +1,304 @@
+/* Coding Challenge Visibility and Contrast Fixes */
+
+/* Challenge container */
+.challenge-container {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin-bottom: 2rem;
+}
+
+/* Challenge header */
+.challenge-header {
+    background: linear-gradient(135deg, #1a3a8f, #2a4da6);
+    color: #ffffff;
+    padding: 1.5rem;
+    position: relative;
+}
+
+.challenge-header h2 {
+    color: #ffffff !important;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.challenge-header p {
+    color: rgba(255, 255, 255, 0.9) !important;
+    margin-bottom: 0;
+}
+
+.challenge-difficulty {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-left: 0.5rem;
+}
+
+.difficulty-easy {
+    background-color: #28a745;
+    color: #ffffff !important;
+}
+
+.difficulty-medium {
+    background-color: #ffc107;
+    color: #212529 !important;
+}
+
+.difficulty-hard {
+    background-color: #dc3545;
+    color: #ffffff !important;
+}
+
+/* Challenge body */
+.challenge-body {
+    padding: 1.5rem;
+}
+
+.challenge-description {
+    color: #212529 !important;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.challenge-description h3 {
+    color: #212529 !important;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.challenge-description p {
+    color: #495057 !important;
+    margin-bottom: 1rem;
+}
+
+.challenge-description ul, 
+.challenge-description ol {
+    color: #495057 !important;
+    margin-bottom: 1rem;
+    padding-left: 1.5rem;
+}
+
+.challenge-description li {
+    margin-bottom: 0.5rem;
+}
+
+.challenge-description code {
+    background-color: #f1f3f5;
+    color: #e83e8c;
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-family: 'Fira Code', monospace;
+}
+
+.challenge-description pre {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    overflow-x: auto;
+}
+
+.challenge-description pre code {
+    background-color: transparent;
+    color: #212529;
+    padding: 0;
+}
+
+/* Challenge examples */
+.challenge-examples {
+    margin-bottom: 1.5rem;
+}
+
+.example-card {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.example-card h4 {
+    color: #212529 !important;
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+}
+
+.example-input, 
+.example-output {
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    padding: 0.75rem;
+    margin-bottom: 0.75rem;
+}
+
+.example-input h5, 
+.example-output h5 {
+    color: #212529 !important;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.example-input pre, 
+.example-output pre {
+    margin-bottom: 0;
+    color: #212529 !important;
+}
+
+/* Challenge constraints */
+.challenge-constraints {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.challenge-constraints h4 {
+    color: #212529 !important;
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+}
+
+.challenge-constraints ul {
+    color: #495057 !important;
+    margin-bottom: 0;
+    padding-left: 1.5rem;
+}
+
+/* Challenge footer */
+.challenge-footer {
+    background-color: #f8f9fa;
+    border-top: 1px solid #dee2e6;
+    padding: 1rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.challenge-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.challenge-tag {
+    background-color: #e9ecef;
+    color: #495057 !important;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+/* Dark theme adjustments */
+.dark-theme .challenge-container {
+    background-color: #212529;
+}
+
+.dark-theme .challenge-header {
+    background: linear-gradient(135deg, #15316f, #1a3a8f);
+}
+
+.dark-theme .challenge-body {
+    background-color: #212529;
+}
+
+.dark-theme .challenge-description h3 {
+    color: #f8f9fa !important;
+}
+
+.dark-theme .challenge-description p,
+.dark-theme .challenge-description ul,
+.dark-theme .challenge-description ol,
+.dark-theme .challenge-description li {
+    color: #ced4da !important;
+}
+
+.dark-theme .challenge-description code {
+    background-color: #343a40;
+    color: #f783ac;
+}
+
+.dark-theme .challenge-description pre {
+    background-color: #343a40;
+    border-color: #495057;
+}
+
+.dark-theme .challenge-description pre code {
+    color: #f8f9fa;
+}
+
+.dark-theme .example-card {
+    background-color: #343a40;
+    border-color: #495057;
+}
+
+.dark-theme .example-card h4 {
+    color: #f8f9fa !important;
+}
+
+.dark-theme .example-input, 
+.dark-theme .example-output {
+    background-color: #212529;
+    border-color: #495057;
+}
+
+.dark-theme .example-input h5, 
+.dark-theme .example-output h5 {
+    color: #f8f9fa !important;
+}
+
+.dark-theme .example-input pre, 
+.dark-theme .example-output pre {
+    color: #f8f9fa !important;
+}
+
+.dark-theme .challenge-constraints {
+    background-color: #343a40;
+    border-color: #495057;
+}
+
+.dark-theme .challenge-constraints h4 {
+    color: #f8f9fa !important;
+}
+
+.dark-theme .challenge-constraints ul {
+    color: #ced4da !important;
+}
+
+.dark-theme .challenge-footer {
+    background-color: #343a40;
+    border-top-color: #495057;
+}
+
+.dark-theme .challenge-tag {
+    background-color: #495057;
+    color: #ced4da !important;
+}
+
+.example-container .example p {
+    color: #000000 !important;
+}
+
+.example-container .example code {
+    color: #000000 !important;
+}
+
+.example-container .example {
+    color: #000000 !important;
+}
+
+/* Keep strong/bold text styling as is */
+.example-container .example strong {
+    font-weight: bold;
+    color: #000000 !important;
+} 

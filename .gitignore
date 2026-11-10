@@ -1,0 +1,61 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+venv_*/
+env/
+.env
+
+# Node.js
+node_modules/
+.next/
+dist/
+build/
+
+# Database
+*.db
+*.sqlite3
+
+# Logs
+*.log
+server_logs.txt
+
+# IDE specific files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS specific files
+.DS_Store
+Thumbs.db
+
+# Session files
+flask_session/
+
+# Test outputs
+*.pdf
+test-*.json
+
+# AI tool configs (keep but don't track changes)
+.clinerules/
+.kilocode/rules/
+.roo/rules/
+.windsurf/rules/
+.cursor/rules/
+.kiro/steering/byterover-rules.md
+.qoder/rules/
+.augment/rules/
+
+# Build artifacts
+.dist/
+
+# Generated files
+screenshots/
+Generated pdf files/
+attached_assets/
+
+# Replit files
+.replit
+replit.nix

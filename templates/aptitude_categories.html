@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Interview Mentor - Aptitude Tests</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='light-theme.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='gradient-theme.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='aptitude-test.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='sidebar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='text-color-fix.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='test-description-fix.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='global-text-fix.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        .aptitude-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px;
+        }
+        
+        .aptitude-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .aptitude-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .aptitude-header p {
+            font-size: 1.1rem;
+            color: #666;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .category-card {
+            background-color: #fff;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .category-header {
+            padding: 25px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .category-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            font-size: 1.8rem;
+            color: white;
+        }
+        
+        .category-title {
+            flex: 1;
+        }
+        
+        .category-title h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 0;
+            color: #333;
+        }
+        
+        .category-body {
+            padding: 0 25px 25px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .category-description {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 20px;
+            flex: 1;
+        }
+        
+        .category-footer {
+            margin-top: auto;
+        }
+        
+        .btn-explore {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: #f8f9fa;
+            color: #333;
+            text-align: center;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .btn-explore:hover {
+            background-color: #e9ecef;
+        }
+        
+        .btn-explore i {
+            margin-left: 8px;
+        }
+        
+        @media (max-width: 768px) {
+            .categories-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h4>Menu</h4>
+            <button class="close-btn" onclick="toggleSidebar()">×</button>
+        </div>
+        <ul class="nav flex-column">
+            <li class="nav-item"><a href="/" class="nav-link"><i class="fas fa-home"></i> Home</a></li>
+            <li class="nav-item"><a href="/resume-builder" class="nav-link"><i class="fas fa-file-alt"></i> Resume Builder</a></li>
+            <li class="nav-item"><a href="/career-guidance" class="nav-link"><i class="fas fa-graduation-cap"></i> Career Guidance</a></li>
+            <li class="nav-item"><a href="/aptitude" class="nav-link active"><i class="fas fa-brain"></i> Aptitude Test</a></li>
+            <li class="nav-item"><a href="/profile" class="nav-link"><i class="fas fa-user"></i> Profile</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-cog"></i> Settings</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-info-circle"></i> About Us</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-envelope"></i> Contact Details</a></li>
+            <!-- Additional menu items to demonstrate scrolling -->
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-book"></i> Resources</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-chart-line"></i> Progress Tracker</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-certificate"></i> Certifications</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-users"></i> Community</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-question-circle"></i> Help & Support</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-bell"></i> Notifications</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-star"></i> Premium Features</a></li>
+            <!-- Only show logout option when user is authenticated -->
+            {% if current_user.is_authenticated %}
+            <li class="nav-item"><a href="/logout" class="nav-link text-danger"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            {% endif %}
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <nav class="navbar">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" id="sidebarToggler">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <h3 class="navbar-brand mx-auto">Interview Mentor</h3>
+            </div>
+        </nav>
+        <div class="container mt-4">
+            <div class="aptitude-container">
+                <div class="aptitude-header">
+                    <h2>Aptitude Tests</h2>
+                    <p>Assess your skills and abilities with our comprehensive aptitude tests. Choose a category below to get started and discover your strengths and areas for improvement.</p>
+                </div>
+                
+                <div class="categories-grid">
+                    {% for category in categories %}
+                    <div class="category-card">
+                        <div class="category-header">
+                            <div class="category-icon" style="background-color: {{ category.color }}">
+                                <i class="{{ category.icon }}"></i>
+                            </div>
+                            <div class="category-title">
+                                <h3>{{ category.name }}</h3>
+                            </div>
+                        </div>
+                        <div class="category-body">
+                            <p class="category-description">{{ category.description }}</p>
+                            <div class="category-footer">
+                                <a href="{{ url_for('aptitude_category', category_id=category.id) }}" class="btn-explore">
+                                    Explore Tests <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='sidebar.js') }}"></script>
+</body>
+</html> 

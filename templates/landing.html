@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interview Mentor - Your Career Companion</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='modern-glass-theme.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='gsap-animations.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='text-color-fix.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='test-description-fix.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='global-text-fix.css') }}">
+    <style>
+        /* Landing Page Specific Styles */
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding: 6rem 0;
+            overflow: hidden;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 10;
+        }
+        
+        .hero-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(90deg, #ffffff, #a5f3fc);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1.2;
+        }
+        
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 2vw, 1.5rem);
+            font-weight: 400;
+            margin-bottom: 2.5rem;
+            color: var(--text-secondary);
+            max-width: 800px;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+        
+        .hero-image {
+            position: absolute;
+            right: -5%;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50%;
+            max-width: 700px;
+            opacity: 0.7;
+            z-index: 1;
+            display: none;
+        }
+        
+        @media (min-width: 992px) {
+            .hero-image {
+                display: block;
+            }
+        }
+        
+        .floating-shapes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+        }
+        
+        .shape {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(5px);
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .shape-1 {
+            width: 300px;
+            height: 300px;
+            top: -150px;
+            left: -150px;
+        }
+        
+        .shape-2 {
+            width: 200px;
+            height: 200px;
+            bottom: -100px;
+            right: 10%;
+        }
+        
+        .shape-3 {
+            width: 150px;
+            height: 150px;
+            top: 20%;
+            right: 20%;
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            animation: morphShape 15s infinite alternate;
+        }
+        
+        @keyframes morphShape {
+            0% {
+                border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            }
+            25% {
+                border-radius: 58% 42% 75% 25% / 76% 46% 54% 24%;
+            }
+            50% {
+                border-radius: 50% 50% 33% 67% / 55% 27% 73% 45%;
+            }
+            75% {
+                border-radius: 33% 67% 58% 42% / 63% 68% 32% 37%;
+            }
+            100% {
+                border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            }
+        }
+        
+        .features-section {
+            padding: 8rem 0;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: clamp(2rem, 4vw, 2.5rem);
+            font-weight: 700;
+            margin-bottom: 3rem;
+            background: linear-gradient(90deg, #ffffff, var(--accent-color-2));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--accent-color-1), var(--accent-color-2));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .feature-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+        
+        .feature-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        
+        .stats-section {
+            padding: 5rem 0;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .stat-card {
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(90deg, #ffffff, var(--accent-color-2));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .stat-label {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+        }
+        
+        .testimonial-section {
+            padding: 5rem 0;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .testimonial-card {
+            padding: 2rem;
+            position: relative;
+        }
+        
+        .testimonial-text {
+            font-size: 1.1rem;
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            color: var(--text-secondary);
+            position: relative;
+        }
+        
+        .testimonial-text::before {
+            content: '"';
+            font-size: 4rem;
+            position: absolute;
+            top: -2rem;
+            left: -1rem;
+            opacity: 0.2;
+            color: var(--accent-color-2);
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 1rem;
+            background: linear-gradient(135deg, var(--accent-color-1), var(--accent-color-2));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+        
+        .author-info h4 {
+            margin: 0;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .author-info p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+        
+        .footer {
+            padding: 3rem 0 2rem;
+            position: relative;
+            z-index: 10;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .footer-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-link:hover {
+            color: var(--text-primary);
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+        
+        .social-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        
+        /* Floating Navigation */
+        .floating-navbar {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 1200px;
+            z-index: 1000;
+            padding: 1rem;
+            border-radius: var(--border-radius-md);
+            background: rgba(26, 58, 143, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .floating-navbar:hover {
+            background: rgba(26, 58, 143, 0.3);
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+        
+        .navbar-nav {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+        
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .nav-link:hover {
+            color: var(--text-primary);
+        }
+        
+        .nav-link.highlight {
+            background: linear-gradient(135deg, var(--primary-gradient-start), var(--primary-gradient-end));
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .nav-link.highlight:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Navigation -->
+    <nav class="floating-navbar">
+        <div class="container-fluid d-flex justify-content-between align-items-center">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-user-tie me-2"></i>
+                Interview Mentor
+            </a>
+            <div class="navbar-nav d-none d-md-flex">
+                <a class="nav-link" href="#features">Features</a>
+                <a class="nav-link" href="#testimonials">Testimonials</a>
+                <a class="nav-link highlight" href="{{ url_for('aptitude_categories') }}">Get Started</a>
+            </div>
+            <button class="btn-glass d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#mobileMenu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+    
+    <!-- Mobile Menu (Collapsed) -->
+    <div class="collapse" id="mobileMenu">
+        <div class="glass-card mt-2 mx-3 d-md-none">
+            <a class="d-block py-2 px-3 text-white text-decoration-none" href="#features">Features</a>
+            <a class="d-block py-2 px-3 text-white text-decoration-none" href="#testimonials">Testimonials</a>
+            <a class="d-block py-2 px-3 text-white text-decoration-none" href="{{ url_for('aptitude_categories') }}">Get Started</a>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="floating-shapes">
+            <div class="shape shape-1 floating-element"></div>
+            <div class="shape shape-2 floating-element"></div>
+            <div class="shape shape-3 floating-element"></div>
+        </div>
+        
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-7 hero-content">
+                    <h1 class="hero-title">Prepare, Practice, Succeed in Your Career Journey</h1>
+                    <p class="hero-subtitle">Interview Mentor is your all-in-one platform for interview preparation, skill assessment, and career development. Get ready to ace your next interview and advance your career.</p>
+                    <div class="cta-buttons">
+                        <a href="{{ url_for('aptitude_categories') }}" class="btn-glass">
+                            Get Started <i class="fas fa-arrow-right ms-2"></i>
+                        </a>
+                        <a href="#features" class="btn-glass" style="background: rgba(255, 255, 255, 0.1);">
+                            Learn More <i class="fas fa-arrow-right ms-2"></i>
+                        </a>
+                    </div>
+                    <div class="hero-stats">
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="stat">
+                                    <div class="stat-number">500+</div>
+                                    <div class="stat-label">Practice Questions</div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="stat">
+                                    <div class="stat-number">50+</div>
+                                    <div class="stat-label">Coding Challenges</div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="stat">
+                                    <div class="stat-number">24/7</div>
+                                    <div class="stat-label">AI Assistance</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Interview Preparation" class="hero-image">
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section" id="features">
+        <div class="container">
+            <h2 class="section-title animate-text">Comprehensive Tools for Your Success</h2>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3">
+                    <div class="glass-card feature-card h-100">
+                        <div class="feature-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h3 class="feature-title">Aptitude Tests</h3>
+                        <p class="feature-description animate-text">Assess your skills with our comprehensive aptitude tests covering logical reasoning, verbal ability, and quantitative aptitude.</p>
+                        <a href="{{ url_for('aptitude_categories') }}" class="btn btn-sm btn-outline-light mt-3 animated-link">Try Tests</a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="glass-card feature-card h-100">
+                        <div class="feature-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <h3 class="feature-title">Coding Practice</h3>
+                        <p class="feature-description animate-text">Sharpen your programming skills with our coding challenges and get instant feedback with AI-powered code reviews.</p>
+                        <a href="{{ url_for('coding_practice') }}" class="btn btn-sm btn-outline-light mt-3 animated-link">Start Coding</a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="glass-card feature-card h-100">
+                        <div class="feature-icon">
+                            <i class="fas fa-compass"></i>
+                        </div>
+                        <h3 class="feature-title">Career Guidance</h3>
+                        <p class="feature-description animate-text">Get personalized career advice, industry insights, and interview preparation tips from our AI career counselor.</p>
+                        <a href="{{ url_for('career_guidance') }}" class="btn btn-sm btn-outline-light mt-3 animated-link">Get Advice</a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="glass-card feature-card h-100">
+                        <div class="feature-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <h3 class="feature-title">Resume Builder</h3>
+                        <p class="feature-description animate-text">Create professional resumes with our easy-to-use builder and get AI-powered suggestions to improve your resume.</p>
+                        <a href="{{ url_for('resume_builder') }}" class="btn btn-sm btn-outline-light mt-3 animated-link">Build Resume</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section parallax-bg" data-parallax-speed="-50">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="glass-card stat-card">
+                        <div class="stat-number">10,000+</div>
+                        <div class="stat-label">Active Users</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="glass-card stat-card">
+                        <div class="stat-number">95%</div>
+                        <div class="stat-label">Success Rate</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="glass-card stat-card">
+                        <div class="stat-number">24/7</div>
+                        <div class="stat-label">Support Available</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonial-section" id="testimonials">
+        <div class="container">
+            <h2 class="section-title">What Our Users Say</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="glass-card testimonial-card hover-scale">
+                        <p class="testimonial-text">
+                            Interview Mentor helped me prepare for my technical interviews and land a job at a top tech company. The aptitude tests were particularly helpful!
+                        </p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">JD</div>
+                            <div class="author-info">
+                                <h4>John Doe</h4>
+                                <p>Software Engineer</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="glass-card testimonial-card hover-scale">
+                        <p class="testimonial-text">
+                            The resume builder is amazing! I received more interview calls after updating my resume with Interview Mentor's suggestions.
+                        </p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">JS</div>
+                            <div class="author-info">
+                                <h4>Jane Smith</h4>
+                                <p>Marketing Specialist</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="glass-card testimonial-card hover-scale">
+                        <p class="testimonial-text">
+                            The career guidance feature provided me with valuable insights about potential career paths based on my skills and interests.
+                        </p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">RJ</div>
+                            <div class="author-info">
+                                <h4>Robert Johnson</h4>
+                                <p>Data Analyst</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <h3 class="footer-title">Interview Mentor</h3>
+                    <p class="footer-description animate-text">Your all-in-one platform for interview preparation, skill assessment, and career development.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link animated-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link animated-link"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-link animated-link"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-6">
+                    <h4 class="footer-subtitle">Features</h4>
+                    <ul class="footer-links animate-list staggered-list">
+                        <li><a href="{{ url_for('aptitude_categories') }}" class="animated-link">Aptitude Tests</a></li>
+                        <li><a href="{{ url_for('coding_practice') }}" class="animated-link">Coding Practice</a></li>
+                        <li><a href="{{ url_for('career_guidance') }}" class="animated-link">Career Guidance</a></li>
+                        <li><a href="{{ url_for('resume_builder') }}" class="animated-link">Resume Builder</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4 col-6">
+                    <h4 class="footer-subtitle">Resources</h4>
+                    <ul class="footer-links animate-list staggered-list">
+                        <li><a href="#" class="animated-link">Blog</a></li>
+                        <li><a href="#" class="animated-link">Tutorials</a></li>
+                        <li><a href="#" class="animated-link">FAQ</a></li>
+                        <li><a href="#" class="animated-link">Support</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4 col-6">
+                    <h4 class="footer-subtitle">Company</h4>
+                    <ul class="footer-links animate-list staggered-list">
+                        <li><a href="#" class="animated-link">About Us</a></li>
+                        <li><a href="#" class="animated-link">Careers</a></li>
+                        <li><a href="#" class="animated-link">Privacy Policy</a></li>
+                        <li><a href="#" class="animated-link">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4 col-6">
+                    <h4 class="footer-subtitle">Contact</h4>
+                    <ul class="footer-links animate-list staggered-list">
+                        <li><a href="mailto:info@interviewmentor.com" class="animated-link">Email Us</a></li>
+                        <li><a href="#" class="animated-link">Live Chat</a></li>
+                        <li><a href="#" class="animated-link">Feedback</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="copyright">© 2023 Interview Mentor. All rights reserved.</p>
+                    </div>
+                    <div class="col-md-6 text-md-end">
+                        <p class="credits">Designed with <i class="fas fa-heart"></i> for aspiring professionals</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='modern-glass.js') }}"></script>
+    <script src="{{ url_for('static', filename='gsap-animations.js') }}"></script>
+</body>
+</html> 

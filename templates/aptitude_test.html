@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Interview Mentor - Aptitude Test</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='light-theme.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='gradient-theme.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='aptitude-test.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='sidebar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='text-color-fix.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='test-description-fix.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='global-text-fix.css') }}">
+    <!-- New accessibility CSS files -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='color-accessibility-fix.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='sidebar-fix.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='profile-fix.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='code-editor-fix.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='form-button-fix.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        .question-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .question-number {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #666;
+        }
+        
+        .question-timer {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #4CAF50;
+        }
+        
+        .question-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+        
+        .option-container {
+            margin-bottom: 15px;
+            transition: all 0.3s;
+        }
+        
+        .option-input {
+            display: none;
+        }
+        
+        .option-label {
+            display: block;
+            padding: 15px 20px;
+            background-color: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1.1rem;
+        }
+        
+        .option-label:hover {
+            background-color: #e9ecef;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .option-input:checked + .option-label {
+            background-color: #e8f5e9;
+            border-color: #4CAF50;
+            color: #2e7d32;
+            font-weight: 500;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(76, 175, 80, 0.2);
+        }
+        
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .submit-btn:hover {
+            background-color: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .progress-container {
+            margin-bottom: 30px;
+        }
+        
+        .progress {
+            height: 10px;
+            border-radius: 5px;
+            background-color: #e9ecef;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            background-color: #4CAF50;
+            transition: width 0.5s ease;
+        }
+        
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: #666;
+            text-decoration: none;
+            margin-bottom: 20px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .back-link:hover {
+            color: #333;
+        }
+        
+        .back-link i {
+            margin-right: 8px;
+        }
+        
+        .timer-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .timer {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #4CAF50;
+        }
+        
+        @media (max-width: 768px) {
+            .question-container {
+                padding: 20px;
+            }
+            
+            .question-title {
+                font-size: 1.3rem;
+            }
+            
+            .option-label {
+                padding: 12px 15px;
+                font-size: 1rem;
+            }
+        }
+        
+        /* New styles for the timer */
+        .timer-display {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .timer-icon {
+            margin-right: 10px;
+            color: #4CAF50;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .timer-warning {
+            animation: pulse 1s infinite;
+        }
+        
+        .timer-label {
+            display: block;
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 5px;
+            text-align: center;
+        }
+        
+        /* Styles for reading comprehension passages */
+        .passage-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #333;
+            margin-bottom: 0;
+        }
+        
+        .card-header h5 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #4CAF50;
+        }
+        
+        .card {
+            border: 1px solid #e9ecef;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .card-body {
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        
+        .instruction-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #333;
+            margin-bottom: 0;
+            font-weight: 500;
+        }
+        
+        /* Styles for grammar questions */
+        .grammar-sentence {
+            margin-bottom: 30px;
+        }
+        
+        .part-container {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            position: relative;
+            min-height: 100px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .part-label {
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            background-color: #4CAF50;
+            color: white;
+            font-weight: bold;
+            padding: 2px 10px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+        }
+        
+        .part-text {
+            margin: 0;
+            font-size: 1.1rem;
+            line-height: 1.5;
+            color: #333;
+        }
+        
+        @media (max-width: 768px) {
+            .part-container {
+                min-height: auto;
+                padding: 20px 15px 15px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h4>Menu</h4>
+            <button class="close-btn" onclick="toggleSidebar()">×</button>
+        </div>
+        <ul class="nav flex-column">
+            <li class="nav-item"><a href="/" class="nav-link"><i class="fas fa-home"></i> Home</a></li>
+            <li class="nav-item"><a href="/resume-builder" class="nav-link"><i class="fas fa-file-alt"></i> Resume Builder</a></li>
+            <li class="nav-item"><a href="/career-guidance" class="nav-link"><i class="fas fa-graduation-cap"></i> Career Guidance</a></li>
+            <li class="nav-item"><a href="/aptitude" class="nav-link active"><i class="fas fa-brain"></i> Aptitude Test</a></li>
+            <li class="nav-item"><a href="/profile" class="nav-link"><i class="fas fa-user"></i> Profile</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-cog"></i> Settings</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-info-circle"></i> About Us</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-envelope"></i> Contact Details</a></li>
+            <!-- Additional menu items to demonstrate scrolling -->
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-book"></i> Resources</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-chart-line"></i> Progress Tracker</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-certificate"></i> Certifications</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-users"></i> Community</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-question-circle"></i> Help & Support</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-bell"></i> Notifications</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-star"></i> Premium Features</a></li>
+            <!-- Only show logout option when user is authenticated -->
+            {% if current_user.is_authenticated %}
+            <li class="nav-item"><a href="/logout" class="nav-link text-danger"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            {% endif %}
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <nav class="navbar">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" id="sidebarToggler">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <h3 class="navbar-brand mx-auto">Interview Mentor</h3>
+            </div>
+        </nav>
+        <div class="container mt-4">
+            <a href="{{ url_for('clear_test') }}" class="back-link" id="exitTestLink">
+                <i class="fas fa-times-circle"></i> Exit Test
+            </a>
+            
+            <div class="question-container">
+                <div class="timer-display">
+                    <i class="fas fa-clock timer-icon"></i>
+                    <span id="timer" class="timer">{{ '%02d:%02d'|format(remaining_seconds//60, remaining_seconds%60) }}</span>
+                </div>
+                <div class="progress-container">
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" style="width: {{ progress }}%;" aria-valuenow="{{ progress }}" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <div class="progress-text">
+                        <span>Question {{ current_number }} of {{ total_questions }}</span>
+                    </div>
+                </div>
+                
+                {% if error_message %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error_message }}
+                </div>
+                {% endif %}
+                
+                {% if question.passage %}
+                <div class="card mb-4">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0">Reading Passage</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="passage-text">{{ question.passage }}</p>
+                    </div>
+                </div>
+                {% endif %}
+                
+                {% if question.instruction %}
+                <div class="card mb-4">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0">Instructions</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="instruction-text">{{ question.instruction }}</p>
+                    </div>
+                </div>
+                {% endif %}
+                
+                <div class="question-title">{{ question.question }}</div>
+                
+                {% if question.parts %}
+                <div class="grammar-sentence mb-4">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="part-container">
+                                <span class="part-label">A</span>
+                                <p class="part-text">{{ question.parts[0] }}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="part-container">
+                                <span class="part-label">B</span>
+                                <p class="part-text">{{ question.parts[1] }}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="part-container">
+                                <span class="part-label">C</span>
+                                <p class="part-text">{{ question.parts[2] }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                
+                <form method="POST" id="questionForm">
+                    {% for option in question.options %}
+                    <div class="option-container">
+                        <input type="radio" name="answer" value="{{ option }}" class="option-input" id="option_{{ loop.index }}">
+                        <label class="option-label" for="option_{{ loop.index }}">{{ option }}</label>
+                    </div>
+                    {% endfor %}
+                    
+                    <button type="submit" class="submit-btn" id="submitBtn">
+                        {% if current_number < total_questions %}Next Question{% else %}Submit Test{% endif %}
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='sidebar.js') }}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Timer functionality
+            const timerElement = document.getElementById('timer');
+            const timerDisplay = document.querySelector('.timer-display');
+            const timerIcon = document.querySelector('.timer-icon');
+            const timeLimit = {{ time_limit }}; // Time limit in minutes
+            const totalSeconds = timeLimit * 60;
+            let remainingSeconds = {{ remaining_seconds }}; // Get remaining seconds from server
+            
+            function updateTimer() {
+                const minutes = Math.floor(remainingSeconds / 60);
+                const seconds = remainingSeconds % 60;
+                
+                // Update timer display
+                timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                // Check if time is up
+                if (remainingSeconds <= 0) {
+                    clearInterval(timerInterval);
+                    // Auto-submit the form
+                    alert('Time is up! Your test will be submitted automatically.');
+                    submitForm();
+                }
+                
+                remainingSeconds--;
+            }
+            
+            // Function to submit the form
+            function submitForm() {
+                // Check if a radio button is selected
+                const selectedOption = document.querySelector('input[name="answer"]:checked');
+                if (!selectedOption) {
+                    alert('Please select an answer before proceeding.');
+                    return false;
+                }
+                
+                // Add loading state to button
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+                submitBtn.disabled = true;
+                
+                // Add fade-out animation to question container
+                document.querySelector('.question-container').style.animation = 'fadeOut 0.3s forwards';
+                
+                // Allow the form to submit after animation
+                setTimeout(() => {
+                    form.submit();
+                }, 300);
+                
+                return true;
+            }
+            
+            // Initialize timer with appropriate colors based on remaining time
+            if (remainingSeconds <= 300 && remainingSeconds > 60) {
+                timerElement.style.color = '#FF9800'; // Orange
+                timerIcon.style.color = '#FF9800'; // Orange
+                timerDisplay.classList.add('timer-warning');
+            } else if (remainingSeconds <= 60) {
+                timerElement.style.color = '#F44336'; // Red
+                timerIcon.style.color = '#F44336'; // Red
+                timerDisplay.classList.add('timer-warning');
+                timerDisplay.style.animationDuration = '0.5s';
+            }
+            
+            // Start the countdown timer
+            updateTimer(); // Call once immediately to show initial time
+            const timerInterval = setInterval(updateTimer, 1000);
+            
+            // Form submission animation
+            const form = document.getElementById('questionForm');
+            const submitBtn = document.getElementById('submitBtn');
+            
+            form.addEventListener('submit', function(e) {
+                e.preventDefault(); // Always prevent default
+                
+                // Use our submitForm function which handles validation
+                if (submitForm()) {
+                    // Form will be submitted by submitForm() if validation passes
+                }
+            });
+            
+            // Exit test confirmation
+            document.getElementById('exitTestLink').addEventListener('click', function(e) {
+                if (!confirm('Are you sure you want to exit the test? Your progress will be lost.')) {
+                    e.preventDefault();
+                }
+            });
+            
+            // Add animation to options when selected
+            const optionInputs = document.querySelectorAll('.option-input');
+            optionInputs.forEach(input => {
+                input.addEventListener('change', function() {
+                    // Remove animation class from all labels
+                    document.querySelectorAll('.option-label').forEach(label => {
+                        label.classList.remove('selected-animation');
+                    });
+                    
+                    // Add animation class to selected label
+                    if (this.checked) {
+                        this.nextElementSibling.classList.add('selected-animation');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html> 

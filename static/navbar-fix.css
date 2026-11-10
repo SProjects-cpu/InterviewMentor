@@ -1,0 +1,88 @@
+/* Navbar and Heading Visibility Fixes */
+
+/* Fix for fixed-top navbar to prevent content overlap */
+.main-content {
+    padding-top: 70px !important; /* Add padding to account for fixed navbar */
+}
+
+/* Enhanced styling for the welcome heading */
+.welcome-heading {
+    margin-top: 2rem !important;
+    margin-bottom: 2.5rem !important;
+    font-size: 2.5rem !important;
+    font-weight: 700 !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+    position: relative !important;
+    z-index: 1 !important;
+}
+
+/* Ensure navbar is visible and properly styled */
+.navbar.fixed-top {
+    z-index: 1030 !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Ensure navbar brand is visible */
+.navbar-brand {
+    font-weight: 700 !important;
+    font-size: 1.5rem !important;
+}
+
+/* Ensure navbar links are visible */
+.navbar-nav .nav-link {
+    color: #ffffff !important;
+    font-weight: 500 !important;
+    padding: 0.5rem 1rem !important;
+    transition: all 0.3s ease !important;
+}
+
+.navbar-nav .nav-link:hover {
+    transform: translateY(-2px) !important;
+}
+
+/* Ensure navbar toggler is visible on mobile */
+.navbar-toggler {
+    border: none !important;
+    padding: 0.5rem !important;
+    font-size: 1.25rem !important;
+    color: #ffffff !important;
+    background-color: transparent !important;
+}
+
+.navbar-toggler:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .main-content {
+        padding-top: 60px !important; /* Slightly less padding on mobile */
+    }
+    
+    .welcome-heading {
+        font-size: 2rem !important;
+        margin-top: 1.5rem !important;
+        margin-bottom: 2rem !important;
+    }
+    
+    .navbar-collapse {
+        background-color: rgba(45, 55, 72, 0.95) !important;
+        padding: 1rem !important;
+        border-radius: 0.5rem !important;
+        margin-top: 0.5rem !important;
+    }
+}
+
+/* Dark theme adjustments */
+.dark-theme .navbar.fixed-top {
+    background: linear-gradient(to right, #1a202c, #2d3748) !important;
+}
+
+.dark-theme .navbar-nav .nav-link {
+    color: #e2e8f0 !important;
+}
+
+.dark-theme .navbar-toggler {
+    color: #e2e8f0 !important;
+} 

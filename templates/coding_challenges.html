@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Interview Mentor - Coding Challenges</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='light-theme.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='gradient-theme.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='sidebar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='coding-test.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='text-color-fix.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='test-description-fix.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='global-text-fix.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='color-accessibility-fix.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='sidebar-fix.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='code-editor-fix.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='form-button-fix.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/firacode@6.2.0/distr/fira_code.css">
+</head>
+<body class="bg-light">
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h4>Menu</h4>
+            <button class="close-btn" onclick="toggleSidebar()">×</button>
+        </div>
+        <ul class="nav flex-column">
+            <li class="nav-item"><a href="/" class="nav-link"><i class="fas fa-home"></i> Home</a></li>
+            <li class="nav-item"><a href="/resume-builder" class="nav-link"><i class="fas fa-file-alt"></i> Resume Builder</a></li>
+            <li class="nav-item"><a href="/career-guidance" class="nav-link"><i class="fas fa-graduation-cap"></i> Career Guidance</a></li>
+            <li class="nav-item"><a href="/aptitude" class="nav-link"><i class="fas fa-brain"></i> Aptitude Test</a></li>
+            <li class="nav-item"><a href="/coding-test" class="nav-link active"><i class="fas fa-code"></i> AI Coding Test</a></li>
+            <li class="nav-item"><a href="/profile" class="nav-link"><i class="fas fa-user"></i> Profile</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-cog"></i> Settings</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-info-circle"></i> About Us</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-envelope"></i> Contact Details</a></li>
+            <!-- Only show logout option when user is authenticated -->
+            {% if current_user.is_authenticated %}
+            <li class="nav-item"><a href="/logout" class="nav-link text-danger"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            {% endif %}
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <nav class="navbar">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" id="sidebarToggler">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <h3 class="navbar-brand mx-auto">Coding Challenges</h3>
+            </div>
+        </nav>
+        
+        <div class="container mt-4">
+            <div class="mb-4">
+                <a href="/coding-test" class="btn editor-btn"><i class="fas fa-arrow-left"></i> Back to AI Coding Test</a>
+            </div>
+            
+            <div class="coding-test-container animate__animated animate__fadeIn">
+                <div class="coding-test-header">
+                    <div class="coding-header-icon mb-3">
+                        <i class="fas fa-code-branch fa-3x"></i>
+                    </div>
+                    <h3>Coding Challenges</h3>
+                    <p>Test your coding skills with these interview-style challenges</p>
+                </div>
+                
+                <div class="coding-test-content">
+                    <div class="filter-container mb-4 animate__animated animate__fadeInDown animate__delay-1s">
+                        <div class="row align-items-center">
+                            <div class="col-md-6">
+                                <h4 class="mb-3 mb-md-0"><i class="fas fa-filter"></i> Filter Challenges</h4>
+                            </div>
+                            <div class="col-md-6 text-md-end">
+                                <div class="dropdown">
+                                    <button class="btn editor-btn dropdown-toggle" type="button" id="difficultyDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fas fa-filter"></i> All Challenges
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="difficultyDropdown">
+                                        <li><a class="dropdown-item" href="#" data-difficulty="all">All Challenges</a></li>
+                                        <li><a class="dropdown-item" href="#" data-difficulty="easy">Easy</a></li>
+                                        <li><a class="dropdown-item" href="#" data-difficulty="medium">Medium</a></li>
+                                        <li><a class="dropdown-item" href="#" data-difficulty="hard">Hard</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="challenge-stats mb-4 animate__animated animate__fadeIn animate__delay-1s">
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <div class="stat-card">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-code"></i>
+                                    </div>
+                                    <div class="stat-content">
+                                        <h4>{{ challenges|length }}</h4>
+                                        <p>Total Challenges</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="stat-card">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                    <div class="stat-content">
+                                        <h4>{{ challenges|selectattr('difficulty', 'equalto', 'Easy')|list|length }}</h4>
+                                        <p>Easy Challenges</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="stat-card">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                    <div class="stat-content">
+                                        <h4>{{ challenges|selectattr('difficulty', 'equalto', 'Hard')|list|length }}</h4>
+                                        <p>Hard Challenges</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="challenges-grid animate__animated animate__fadeIn animate__delay-2s">
+                        {% for challenge in challenges %}
+                        <div class="challenge-item" data-difficulty="{{ challenge.difficulty|lower }}">
+                            <div class="challenge-card" {% if challenge.title == "String Reversal" %}data-type="string-reversal"{% elif challenge.title == "Palindrome Checker" %}data-type="palindrome"{% endif %}>
+                                <div class="challenge-header">
+                                    <span class="badge bg-{{ challenge.difficulty_class }} position-absolute top-0 end-0 m-2">{{ challenge.difficulty }}</span>
+                                    <h4>{{ challenge.title }}</h4>
+                                </div>
+                                <div class="challenge-body">
+                                    <p>{{ challenge.subtitle }}</p>
+                                    <div class="challenge-tags">
+                                        {% if challenge.title == "String Reversal" or challenge.title == "Palindrome Checker" %}
+                                        <span class="tag">Strings</span>
+                                        {% endif %}
+                                        {% if challenge.title == "String Reversal" %}
+                                        <span class="tag">Algorithms</span>
+                                        {% endif %}
+                                        {% if challenge.title == "Palindrome Checker" %}
+                                        <span class="tag">Logic</span>
+                                        {% endif %}
+                                        {% for tag in challenge.tags %}
+                                        <span class="tag">{{ tag }}</span>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <div class="challenge-footer">
+                                    <div class="challenge-meta">
+                                        <div class="difficulty">
+                                            <i class="fas fa-signal"></i> {{ challenge.difficulty }}
+                                        </div>
+                                        <div class="time">
+                                            <i class="far fa-clock"></i> 15-30 min
+                                        </div>
+                                    </div>
+                                    <a href="/coding-test/challenge/{{ challenge.id }}" class="btn">Solve <i class="fas fa-arrow-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='sidebar.js') }}"></script>
+    <script src="{{ url_for('static', filename='coding-test.js') }}"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Filter functionality
+        const filterLinks = document.querySelectorAll('.dropdown-menu .dropdown-item');
+        const difficultyDropdown = document.getElementById('difficultyDropdown');
+        const challengeItems = document.querySelectorAll('.challenge-item');
+        
+        filterLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Update dropdown button text
+                const filterText = this.textContent.trim();
+                difficultyDropdown.innerHTML = `<i class="fas fa-filter"></i> ${filterText}`;
+                
+                // Get the selected difficulty
+                const difficulty = this.getAttribute('data-difficulty');
+                
+                // Filter the challenge cards
+                challengeItems.forEach(item => {
+                    const itemDifficulty = item.getAttribute('data-difficulty');
+                    
+                    if (difficulty === 'all' || itemDifficulty === difficulty) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+    });
+    </script>
+
+    <style>
+        .challenge-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .tag {
+            background-color: rgba(66, 133, 244, 0.1);
+            color: #4285f4;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .coding-header-icon {
+            background-color: rgba(255, 255, 255, 0.2);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</body>
+</html> 

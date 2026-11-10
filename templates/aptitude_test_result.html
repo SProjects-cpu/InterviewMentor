@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Interview Mentor - Test Results</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='light-theme.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='gradient-theme.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='aptitude-test.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='sidebar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='text-color-fix.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='test-description-fix.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='global-text-fix.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        .result-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .result-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .result-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .result-summary {
+            display: flex;
+            justify-content: space-around;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        
+        .result-stat {
+            text-align: center;
+            padding: 20px;
+            flex: 1;
+            min-width: 150px;
+            margin: 10px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .result-stat:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: #4CAF50;
+            word-wrap: break-word;
+            width: 100%;
+            text-align: center;
+        }
+        
+        /* Special handling for longer performance text */
+        .result-stat:nth-child(3) .stat-value {
+            font-size: 1.5rem;
+        }
+        
+        .stat-label {
+            font-size: 1rem;
+            color: #666;
+        }
+        
+        .performance-indicator {
+            text-align: center;
+            margin: 30px 0;
+            padding: 20px;
+            background-color: #e8f5e9;
+            border-radius: 10px;
+            animation: pulseGreen 2s infinite;
+        }
+        
+        @keyframes pulseGreen {
+            0% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(76, 175, 80, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0); }
+        }
+        
+        .performance-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #2e7d32;
+            margin-bottom: 10px;
+            word-wrap: break-word;
+        }
+        
+        .performance-message {
+            font-size: 1.1rem;
+            color: #388e3c;
+            word-wrap: break-word;
+        }
+        
+        .breakdown-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #333;
+            margin: 30px 0 20px;
+            text-align: center;
+        }
+        
+        .question-item {
+            margin-bottom: 25px;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #f8f9fa;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .question-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .question-text {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .answer-container {
+            margin-bottom: 10px;
+        }
+        
+        .answer-label {
+            font-weight: 500;
+            color: #666;
+            margin-right: 10px;
+        }
+        
+        .user-answer {
+            font-weight: 500;
+            padding: 5px 10px;
+            border-radius: 5px;
+            display: inline-block;
+        }
+        
+        .correct-answer {
+            font-weight: 500;
+            color: #2e7d32;
+            padding: 5px 10px;
+            background-color: #e8f5e9;
+            border-radius: 5px;
+            display: inline-block;
+        }
+        
+        .correct {
+            border-left: 5px solid #4CAF50;
+        }
+        
+        .incorrect {
+            border-left: 5px solid #f44336;
+        }
+        
+        .user-answer.correct {
+            color: #2e7d32;
+            background-color: #e8f5e9;
+            border-left: none;
+        }
+        
+        .user-answer.incorrect {
+            color: #c62828;
+            background-color: #ffebee;
+            border-left: none;
+        }
+        
+        .explanation {
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #f1f8e9;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            color: #333;
+        }
+        
+        .explanation-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #2e7d32;
+        }
+        
+        .action-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .btn-action {
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary-action {
+            background-color: #4CAF50;
+            color: white;
+        }
+        
+        .btn-primary-action:hover {
+            background-color: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            color: white;
+        }
+        
+        .btn-secondary-action {
+            background-color: #f8f9fa;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+        
+        .btn-secondary-action:hover {
+            background-color: #e9ecef;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            color: #333;
+        }
+        
+        .time-taken {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 1.1rem;
+            color: #666;
+        }
+        
+        .time-value {
+            font-weight: 600;
+            color: #4CAF50;
+        }
+        
+        .circular-progress {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 20px;
+        }
+        
+        .circular-progress svg {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+        
+        .circular-progress circle {
+            fill: none;
+            stroke-width: 10;
+            stroke-linecap: round;
+            stroke-dasharray: 283;
+            transition: stroke-dashoffset 1s ease-in-out;
+        }
+        
+        .progress-value {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+            font-weight: 700;
+            color: #4CAF50;
+            animation: scaleIn 0.5s ease-out 0.5s forwards;
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.8);
+        }
+        
+        @keyframes scaleIn {
+            from { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+            to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        }
+        
+        .badge {
+            padding: 5px 8px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+        }
+        
+        @media (max-width: 768px) {
+            .result-container {
+                padding: 20px;
+            }
+            
+            .result-summary {
+                flex-direction: column;
+            }
+            
+            .result-stat {
+                margin: 10px 0;
+                width: 100%;
+            }
+            
+            .stat-value {
+                font-size: 1.6rem;
+            }
+            
+            .result-stat:nth-child(3) .stat-value {
+                font-size: 1.4rem;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .btn-action {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h4>Menu</h4>
+            <button class="close-btn" onclick="toggleSidebar()">×</button>
+        </div>
+        <ul class="nav flex-column">
+            <li class="nav-item"><a href="/" class="nav-link"><i class="fas fa-home"></i> Home</a></li>
+            <li class="nav-item"><a href="/resume-builder" class="nav-link"><i class="fas fa-file-alt"></i> Resume Builder</a></li>
+            <li class="nav-item"><a href="/career-guidance" class="nav-link"><i class="fas fa-graduation-cap"></i> Career Guidance</a></li>
+            <li class="nav-item"><a href="/aptitude" class="nav-link active"><i class="fas fa-brain"></i> Aptitude Test</a></li>
+            <li class="nav-item"><a href="/profile" class="nav-link"><i class="fas fa-user"></i> Profile</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-cog"></i> Settings</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-info-circle"></i> About Us</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-envelope"></i> Contact Details</a></li>
+            <!-- Additional menu items to demonstrate scrolling -->
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-book"></i> Resources</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-chart-line"></i> Progress Tracker</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-certificate"></i> Certifications</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-users"></i> Community</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-question-circle"></i> Help & Support</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-bell"></i> Notifications</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-star"></i> Premium Features</a></li>
+            <!-- Only show logout option when user is authenticated -->
+            {% if current_user.is_authenticated %}
+            <li class="nav-item"><a href="/logout" class="nav-link text-danger"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            {% endif %}
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <nav class="navbar">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" id="sidebarToggler">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <h3 class="navbar-brand mx-auto">Interview Mentor</h3>
+            </div>
+        </nav>
+        <div class="container mt-4">
+            <div class="result-container">
+                <div class="result-header">
+                    <h2 class="result-title">Test Results</h2>
+                    <div class="circular-progress">
+                        <svg>
+                            <circle cx="75" cy="75" r="45" stroke="#e9ecef"></circle>
+                            <circle cx="75" cy="75" r="45" stroke="#4CAF50" class="progress-circle" style="stroke-dashoffset: {{ 283 - (283 * score_percentage / 100) }}"></circle>
+                        </svg>
+                        <div class="progress-value">{{ score_percentage|round|int }}%</div>
+                    </div>
+                </div>
+                
+                <div class="result-summary">
+                    <div class="result-stat">
+                        <div class="stat-value">{{ correct_count }}</div>
+                        <div class="stat-label">Correct Answers</div>
+                    </div>
+                    <div class="result-stat">
+                        <div class="stat-value">{{ total_questions }}</div>
+                        <div class="stat-label">Total Questions</div>
+                    </div>
+                    <div class="result-stat">
+                        <div class="stat-value">{{ performance }}</div>
+                        <div class="stat-label">Performance</div>
+                    </div>
+                </div>
+                
+                <div class="time-taken">
+                    <span>Time taken: </span>
+                    <span class="time-value">{{ minutes }} minutes {{ seconds }} seconds</span>
+                </div>
+                
+                <div class="performance-indicator">
+                    <div class="performance-title">{{ performance }}</div>
+                    <div class="performance-message">{{ performance_message }}</div>
+                </div>
+                
+                <h3 class="breakdown-title">Detailed Breakdown</h3>
+                
+                {% for question in questions %}
+                    {% set index = loop.index0 %}
+                    {% set answer_data = answers.get(index|string, {}) %}
+                    {% set is_correct = answer_data.get('is_correct', False) %}
+                    <div class="question-item {% if is_correct %}correct{% else %}incorrect{% endif %}" style="animation-delay: {{ loop.index * 0.1 }}s">
+                        <div class="question-text">
+                            <span class="badge {% if is_correct %}bg-success{% else %}bg-danger{% endif %} me-2">
+                                {% if is_correct %}<i class="fas fa-check"></i>{% else %}<i class="fas fa-times"></i>{% endif %}
+                            </span>
+                            {{ loop.index }}. {{ question.question }}
+                        </div>
+                        <div class="answer-container">
+                            <span class="answer-label">Your answer:</span>
+                            <span class="user-answer {% if is_correct %}correct{% else %}incorrect{% endif %}">
+                                {{ answer_data.get('user_answer', 'Not answered') }}
+                            </span>
+                        </div>
+                        <div class="answer-container">
+                            <span class="answer-label">Correct answer:</span>
+                            <span class="correct-answer">{{ question.answer }}</span>
+                        </div>
+                        {% if question.explanation %}
+                        <div class="explanation">
+                            <div class="explanation-title">Explanation:</div>
+                            <div>{{ question.explanation }}</div>
+                        </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+                
+                <div class="action-buttons">
+                    <a href="{{ url_for('aptitude_categories') }}" class="btn-action btn-secondary-action">
+                        <i class="fas fa-list me-2"></i> Back to Categories
+                    </a>
+                    <a href="{{ url_for('aptitude_category', category_id='quantitative') }}" class="btn-action btn-primary-action">
+                        <i class="fas fa-redo me-2"></i> Try Another Test
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('mainContent');
+            const sidebarToggler = document.getElementById('sidebarToggler');
+            
+            // Function to toggle sidebar
+            function toggleSidebar() {
+                sidebar.classList.toggle('active');
+                mainContent.classList.toggle('shifted');
+            }
+            
+            // Click event for hamburger icon with rotation
+            sidebarToggler.addEventListener('click', function() {
+                // Add rotation class
+                this.classList.add('rotating');
+                
+                // Toggle sidebar
+                toggleSidebar();
+                
+                // Remove rotation class after animation completes
+                setTimeout(() => {
+                    this.classList.remove('rotating');
+                }, 1000);
+            });
+            
+            // Close button in sidebar
+            document.querySelector('.close-btn').addEventListener('click', function() {
+                toggleSidebar();
+            });
+            
+            // Add animation to question items
+            const questionItems = document.querySelectorAll('.question-item');
+            questionItems.forEach((item, index) => {
+                setTimeout(() => {
+                    item.style.opacity = '1';
+                    item.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html> 

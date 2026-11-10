@@ -1,0 +1,188 @@
+/* Light theme overrides for resume builder */
+body {
+    background-color: #f8f9fa !important;
+    color: #212529 !important;
+}
+
+.form-control {
+    background-color: #fff !important;
+    color: #212529 !important;
+    border-color: #ced4da !important;
+}
+
+.form-label {
+    color: #212529 !important;
+}
+
+/* Form-specific styling that won't affect the preview */
+#cv-form .cv-form-row-title h3 {
+    color: #2e8b57 !important; /* Sea Green color */
+    font-weight: 700 !important;
+    background-color: #ffffff !important;
+    padding: 10px !important;
+    border-radius: 5px !important;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+}
+
+/* Reset preview section styles to ensure they're not affected */
+.preview-cnt .preview-blk-title h3 {
+    color: inherit !important;
+    font-weight: inherit !important;
+    background-color: transparent !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+
+/* Form block styling */
+#cv-form .cv-form-blk {
+    background-color: #f8f9fa !important;
+    border: 1px solid #2e8b57 !important; /* Sea Green border */
+    border-radius: 8px !important;
+    padding: 15px !important;
+    margin-bottom: 20px !important;
+}
+
+/* Form section titles */
+#cv-form .cv-form-row-title {
+    margin-bottom: 15px !important;
+    border-bottom: 2px solid #2e8b57 !important; /* Sea Green border */
+    padding-bottom: 5px !important;
+}
+
+/* Button styling */
+.repeater-add-btn, .repeater-remove-btn {
+    background-color: #6c757d !important;
+    color: white !important;
+}
+
+/* Navbar styling */
+.navbar {
+    background-color: #f8f9fa !important;
+}
+
+/* Responsive navbar brand styling */
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 20px !important;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    margin: 0 auto !important;
+}
+
+.navbar-brand-icon {
+    width: 30px;
+    height: auto;
+    margin-right: 12px !important;
+    filter: brightness(0) saturate(100%) hue-rotate(120deg) !important; /* Make icon green */
+}
+
+.navbar-brand-text {
+    color: #2e8b57 !important;
+    font-weight: bold !important;
+    font-size: 1.5rem !important;
+    text-transform: capitalize;
+    letter-spacing: 0.5px !important;
+}
+
+.navbar-brand-text span {
+    color: #3cb371 !important;
+    font-weight: bold !important;
+    text-decoration: underline !important;
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 576px) {
+    .navbar-brand {
+        padding: 10px 15px !important;
+    }
+    
+    .navbar-brand-text {
+        font-size: 1.2rem !important;
+    }
+    
+    .navbar-brand-icon {
+        width: 25px;
+    }
+}
+
+@media (max-width: 400px) {
+    .navbar-brand-text {
+        font-size: 1rem !important;
+    }
+    
+    .navbar-brand-icon {
+        width: 20px;
+    }
+}
+
+/* General heading styles that won't affect the preview */
+#about-sc h1, #about-sc h2, #about-sc h3:not(.preview-blk-title h3), #about-sc h4, #about-sc h5, #about-sc h6 {
+    color: #2e8b57 !important; /* Sea Green color */
+    font-weight: 700 !important;
+    background-color: transparent !important;
+}
+
+/* Preserve original preview styles */
+.preview-cnt-l {
+    background-color: #084C41 !important; /* Keep the left side of the preview with the original color */
+}
+
+.preview-cnt-r {
+    background-color: #fff !important;
+    color: #212529 !important;
+}
+
+.preview-blk-title h3 {
+    color: inherit !important;
+}
+
+.preview-item-val {
+    color: inherit !important;
+}
+
+.print-btn {
+    background-color: #007bff !important;
+    border-color: #007bff !important;
+}
+
+/* Sidebar styles */
+.sidebar {
+    background-color: #f8f9fa !important;
+    color: #212529 !important;
+}
+
+.sidebar .nav-link {
+    color: #212529 !important;
+}
+
+.sidebar .nav-link:hover {
+    background-color: #e9ecef !important;
+}
+
+.sidebar-header {
+    background-color: #e9ecef !important;
+}
+
+.close-btn {
+    color: #212529 !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #000000 !important;
+    font-weight: 700 !important;
+    background-color: transparent !important;
+}
+
+/* Additional styling for section headings */
+.cv-form-row-title {
+    margin-bottom: 15px !important;
+    border-bottom: 2px solid #dee2e6 !important;
+    padding-bottom: 5px !important;
+} 

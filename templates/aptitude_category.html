@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Interview Mentor - {{ category.name }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='light-theme.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='gradient-theme.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='aptitude-test.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='sidebar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='text-color-fix.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='test-description-fix.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='global-text-fix.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        .aptitude-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px;
+        }
+        
+        .category-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .category-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 25px;
+            font-size: 2.2rem;
+            color: white;
+        }
+        
+        .category-info {
+            flex: 1;
+        }
+        
+        .category-info h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .category-info p {
+            font-size: 1.1rem;
+            color: #000000 !important;
+            margin: 0;
+        }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: #666;
+            text-decoration: none;
+            margin-bottom: 20px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .back-link:hover {
+            color: #333;
+        }
+        
+        .back-link i {
+            margin-right: 8px;
+        }
+        
+        .tests-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .test-card {
+            background-color: #fff;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            border-top: 5px solid {{ category.color }};
+        }
+        
+        .test-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .test-header {
+            padding: 25px 25px 15px;
+        }
+        
+        .test-title h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin: 0 0 10px;
+            color: #333;
+        }
+        
+        .test-body {
+            padding: 0 25px 25px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .test-description {
+            font-size: 1rem;
+            color: #000000 !important;
+            margin-bottom: 20px;
+            flex: 1;
+        }
+        
+        .test-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            color: #000000 !important;
+        }
+        
+        .test-meta-item {
+            display: flex;
+            align-items: center;
+            color: #000000 !important;
+        }
+        
+        .test-meta-item i {
+            margin-right: 5px;
+            color: {{ category.color }};
+        }
+        
+        .test-footer {
+            margin-top: auto;
+        }
+        
+        .btn-start {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: {{ category.color }};
+            color: white;
+            text-align: center;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .btn-start:hover {
+            opacity: 0.9;
+            color: white;
+        }
+        
+        .btn-start i {
+            margin-left: 8px;
+        }
+        
+        .difficulty {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        
+        .difficulty.easy {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+        
+        .difficulty.medium {
+            background-color: #fff3e0;
+            color: #e65100;
+        }
+        
+        .difficulty.hard {
+            background-color: #ffebee;
+            color: #c62828;
+        }
+        
+        @media (max-width: 768px) {
+            .tests-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .category-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .category-icon {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+        }
+        
+        /* Ensure test description text is black */
+        .test-card .test-body .test-description {
+            color: #000000 !important;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h4>Menu</h4>
+            <button class="close-btn" onclick="toggleSidebar()">×</button>
+        </div>
+        <ul class="nav flex-column">
+            <li class="nav-item"><a href="/" class="nav-link"><i class="fas fa-home"></i> Home</a></li>
+            <li class="nav-item"><a href="/resume-builder" class="nav-link"><i class="fas fa-file-alt"></i> Resume Builder</a></li>
+            <li class="nav-item"><a href="/career-guidance" class="nav-link"><i class="fas fa-graduation-cap"></i> Career Guidance</a></li>
+            <li class="nav-item"><a href="/aptitude" class="nav-link active"><i class="fas fa-brain"></i> Aptitude Test</a></li>
+            <li class="nav-item"><a href="/profile" class="nav-link"><i class="fas fa-user"></i> Profile</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-cog"></i> Settings</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-info-circle"></i> About Us</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-envelope"></i> Contact Details</a></li>
+            <!-- Additional menu items to demonstrate scrolling -->
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-book"></i> Resources</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-chart-line"></i> Progress Tracker</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-certificate"></i> Certifications</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-users"></i> Community</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-question-circle"></i> Help & Support</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-bell"></i> Notifications</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-star"></i> Premium Features</a></li>
+            <!-- Only show logout option when user is authenticated -->
+            {% if current_user.is_authenticated %}
+            <li class="nav-item"><a href="/logout" class="nav-link text-danger"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            {% endif %}
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <nav class="navbar">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" id="sidebarToggler">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <h3 class="navbar-brand mx-auto">Interview Mentor</h3>
+            </div>
+        </nav>
+        <div class="container mt-4">
+            <!-- Flash Messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category if category != 'message' else 'info' }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            
+            <div class="aptitude-container">
+                <a href="{{ url_for('aptitude_categories') }}" class="back-link">
+                    <i class="fas fa-arrow-left"></i> Back to Categories
+                </a>
+                
+                <div class="category-header">
+                    <div class="category-icon" style="background-color: {{ category.color }}">
+                        <i class="{{ category.icon }}"></i>
+                    </div>
+                    <div class="category-info">
+                        <h2>{{ category.name }}</h2>
+                        <p>{{ category.description }}</p>
+                    </div>
+                </div>
+                
+                <div class="tests-grid">
+                    {% for test in category.tests %}
+                    <div class="test-card">
+                        <div class="test-header">
+                            <div class="test-title">
+                                <h3>
+                                    {{ test.name }}
+                                    <span class="difficulty {{ test.difficulty.lower() }}">{{ test.difficulty }}</span>
+                                </h3>
+                            </div>
+                        </div>
+                        <div class="test-body">
+                            <p class="test-description" style="color: #000000 !important;">{{ test.description }}</p>
+                            <div class="test-meta">
+                                <div class="test-meta-item">
+                                    <i class="fas fa-question-circle"></i>
+                                    <span>{{ test.questions }} Questions</span>
+                                </div>
+                                <div class="test-meta-item">
+                                    <i class="fas fa-clock"></i>
+                                    <span>{{ test.time }} Minutes</span>
+                                </div>
+                            </div>
+                            <div class="test-footer">
+                                <a href="{{ url_for('aptitude_test', test_id=test.id) }}" class="btn-start">
+                                    Start Test <i class="fas fa-play"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='sidebar.js') }}"></script>
+</body>
+</html> 

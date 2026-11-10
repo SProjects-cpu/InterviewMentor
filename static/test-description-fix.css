@@ -1,0 +1,23 @@
+/* Fix for test description text color */
+.test-card .test-body .test-description {
+    color: #000000 !important;
+}
+
+.test-description {
+    color: #000000 !important;
+}
+
+/* More specific selectors to ensure override */
+div.test-card div.test-body p.test-description {
+    color: #000000 !important;
+}
+
+/* Target by direct child selectors */
+.test-card > .test-body > .test-description {
+    color: #000000 !important;
+}
+
+/* Target by attribute */
+p[class="test-description"] {
+    color: #000000 !important;
+} 

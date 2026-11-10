@@ -1,0 +1,355 @@
+/* Color Accessibility Fix - Global Color Variables */
+:root {
+    /* Primary brand colors */
+    --primary-blue: #1a3a8f;
+    --primary-blue-light: #2a4da6;
+    --primary-blue-dark: #15316f;
+    --primary-purple: #8e44ad;
+    
+    /* Text colors */
+    --text-dark: #212529;
+    --text-medium: #495057;
+    --text-light: #f8f9fa;
+    
+    /* Background colors */
+    --bg-light: #ffffff;
+    --bg-light-alt: #f8f9fa;
+    --bg-dark: #343a40;
+    --bg-dark-alt: #212529;
+    
+    /* Accent colors */
+    --accent-green: #34a853;
+    --accent-blue: #4285f4;
+    --accent-yellow: #fbbc05;
+    --accent-red: #ea4335;
+    
+    /* Status colors */
+    --success: #28a745;
+    --warning: #ffc107;
+    --danger: #dc3545;
+    --info: #17a2b8;
+}
+
+/* ===== 1. Profile Section Fixes ===== */
+/* Profile section background and text */
+.profile-container {
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+}
+
+.profile-header {
+    background: linear-gradient(135deg, var(--primary-blue), var(--primary-purple));
+    color: var(--text-light);
+}
+
+.profile-info h2, 
+.profile-info h3, 
+.profile-info h4 {
+    color: var(--text-dark) !important;
+}
+
+.profile-info p, 
+.profile-info span, 
+.profile-info li {
+    color: var(--text-medium) !important;
+}
+
+.profile-card {
+    background-color: var(--bg-light);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.profile-card-header {
+    background-color: var(--primary-blue-light);
+    color: var(--text-light);
+}
+
+.profile-stats-item {
+    background-color: var(--bg-light-alt);
+    color: var(--text-dark);
+}
+
+/* ===== 2. AI Coding Test Section Fixes ===== */
+/* Sidebar navigation */
+.sidebar {
+    background-color: var(--primary-blue);
+    color: var(--text-light);
+}
+
+.sidebar-header {
+    background-color: var(--primary-blue-dark);
+    color: var(--text-light);
+}
+
+.sidebar .nav-link {
+    color: var(--text-light) !important;
+}
+
+.sidebar .nav-link:hover {
+    background-color: var(--primary-blue-light);
+    color: var(--text-light) !important;
+}
+
+.sidebar .nav-link.active {
+    background-color: var(--primary-blue-light);
+    border-left: 4px solid var(--text-light);
+    color: var(--text-light) !important;
+}
+
+/* Code editor */
+.code-editor-container {
+    background-color: var(--bg-light);
+    border: 1px solid #dee2e6;
+}
+
+.code-editor {
+    background-color: #f8f9fa;
+    color: #212529;
+    font-family: 'Fira Code', monospace;
+}
+
+.editor-header {
+    background-color: var(--primary-blue);
+    color: var(--text-light);
+}
+
+.terminal-output {
+    background-color: #212529;
+    color: #f8f9fa;
+}
+
+.terminal-output .error {
+    color: var(--danger) !important;
+}
+
+.terminal-output .success {
+    color: var(--success) !important;
+}
+
+/* Test instructions and feedback */
+.question-panel {
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+    border: 1px solid #dee2e6;
+}
+
+.question-description {
+    color: var(--text-dark) !important;
+}
+
+.ai-review-container {
+    background-color: var(--bg-light);
+    border: 1px solid #dee2e6;
+}
+
+.ai-review-header {
+    background-color: var(--primary-blue);
+    color: var(--text-light);
+}
+
+.ai-review-content {
+    color: var(--text-dark);
+}
+
+.ai-review-content code {
+    background-color: #f1f3f5;
+    color: #e83e8c;
+}
+
+/* Feature cards and icons */
+.feature-card {
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+}
+
+.feature-content h4 {
+    color: var(--text-dark) !important;
+}
+
+.feature-content p {
+    color: var(--text-medium) !important;
+}
+
+.feature-icon {
+    background: linear-gradient(135deg, var(--primary-blue), var(--primary-purple));
+    color: var(--text-light) !important;
+}
+
+.ai-feature-item {
+    background-color: var(--bg-light);
+}
+
+.ai-feature-item span {
+    color: var(--text-dark) !important;
+}
+
+.ai-feature-item i {
+    background: linear-gradient(135deg, var(--accent-blue), var(--accent-green));
+    color: var(--text-light) !important;
+}
+
+/* ===== 3. General UI Fixes ===== */
+/* Text contrast fixes */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--text-dark) !important;
+}
+
+p, span, li, td, th {
+    color: var(--text-dark) !important;
+}
+
+.bg-dark h1, .bg-dark h2, .bg-dark h3, 
+.bg-dark h4, .bg-dark h5, .bg-dark h6,
+.bg-dark p, .bg-dark span, .bg-dark li {
+    color: var(--text-light) !important;
+}
+
+/* Form elements */
+.form-label {
+    color: var(--text-dark) !important;
+    font-weight: 500;
+}
+
+.form-control {
+    color: var(--text-dark) !important;
+    background-color: var(--bg-light) !important;
+    border: 1px solid #ced4da;
+}
+
+.form-control:focus {
+    border-color: var(--primary-blue);
+    box-shadow: 0 0 0 0.2rem rgba(26, 58, 143, 0.25);
+}
+
+.bg-dark .form-label {
+    color: var(--text-light) !important;
+}
+
+.bg-dark .form-control {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    color: var(--text-light) !important;
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: var(--primary-blue);
+    border-color: var(--primary-blue);
+    color: var(--text-light) !important;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-blue-dark);
+    border-color: var(--primary-blue-dark);
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+    color: var(--text-light) !important;
+}
+
+.btn-outline-primary {
+    border-color: var(--primary-blue);
+    color: var(--primary-blue) !important;
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--primary-blue);
+    color: var(--text-light) !important;
+}
+
+/* ===== 4. Dark Mode Support ===== */
+.dark-theme {
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+}
+
+.dark-theme .card,
+.dark-theme .profile-card,
+.dark-theme .feature-card,
+.dark-theme .ai-feature-item,
+.dark-theme .question-panel {
+    background-color: var(--bg-dark-alt);
+    color: var(--text-light);
+}
+
+.dark-theme h1, .dark-theme h2, .dark-theme h3,
+.dark-theme h4, .dark-theme h5, .dark-theme h6,
+.dark-theme p, .dark-theme span, .dark-theme li {
+    color: var(--text-light) !important;
+}
+
+.dark-theme .form-control {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    color: var(--text-light) !important;
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.dark-theme .code-editor {
+    background-color: #2d3748;
+    color: #e2e8f0;
+}
+
+/* ===== 5. Accessibility Enhancements ===== */
+/* High contrast focus states */
+a:focus, button:focus, input:focus, select:focus, textarea:focus {
+    outline: 3px solid var(--accent-blue);
+    outline-offset: 2px;
+}
+
+/* Skip to content link for screen readers */
+.skip-to-content {
+    position: absolute;
+    left: -9999px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+.skip-to-content:focus {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+    padding: 10px 15px;
+    background-color: var(--primary-blue);
+    color: var(--text-light);
+    z-index: 9999;
+}
+
+/* Ensure text remains visible during webfont load */
+.font-loading * {
+    color: currentColor !important;
+}
+
+/* Ensure sufficient color contrast for all elements */
+.text-muted {
+    color: #6c757d !important;
+}
+
+.dark-theme .text-muted {
+    color: #adb5bd !important;
+}
+
+/* Override any inline styles that might affect visibility */
+[style*="color"] {
+    color: inherit !important;
+}
+
+/* Exceptions for elements that should maintain their original colors */
+.btn,
+.badge,
+.alert,
+.progress-bar,
+.nav-link,
+.navbar-brand,
+.difficulty,
+.icon,
+i.fas,
+i.fab,
+i.far {
+    color: currentColor !important;
+} 
